@@ -1,0 +1,414 @@
+a{
+	color:#5e5e5e;
+}
+a:hover{
+	color:red;
+}
+h2{
+	font-family: "SimHei",Arial;
+	color: #005da0;
+}
+
+/*body{
+	background-image:url(../../images/backLogo.png);
+	background-size:25em;
+	background-position:0% 73%;
+	background-repeat:no-repeat;
+}*/
+
+#body{
+	width:1000px;
+	height:562px;
+	margin:0 auto;
+}
+
+#bodyRight{
+	width:580px;
+	height:572px;
+	float:right;
+	background-color:#f7f7f7;
+	position:relative;
+}
+
+#bodyRight #backLogo{
+	position:absolute;
+	left:200px;
+	top:-7px;
+	width:550px;
+	height:550px;
+	z-index:1;
+}
+
+#bodyLeft{
+	width:407px;
+	height:572px;
+	background-color:#f2f2f2;
+	float:left;
+}
+
+	#scroll{
+		height: 350px;
+		overflow: hidden; 
+		background: #262626;
+		position:relative;
+		z-index:0;
+		margin-bottom:5px;
+	}
+
+	.scrollNewsTitle{
+		color:white;
+		font-size:32px;
+		font-family:"Microsoft YaHei";
+		padding:50px;
+	}
+
+	.scrollNewsContent{
+		color:white;
+		font-size:16px;
+		padding:30px;
+		line-height: 2.0em;
+	}
+
+	.wrap{
+		height:350px;
+		width:1000px;
+		margin:0 auto;
+		background:#262626;
+		position:relative;
+	}
+	
+	.scrollMessage{
+		width:457px;
+		height:350px;
+		background-image:url(../../../images/rotateBack.png);
+		position:absolute;
+		left:0;
+		z-index:100;
+	}
+
+	.scrollImg{
+		position:absolute;
+		right:0;
+	}
+
+	.prev-image{
+		position: absolute;
+		left: -1000px;
+		top: 0;
+		opacity: 0.2;
+		filter: alpha(opacity=20);
+	}
+
+	.next-image{
+		position: absolute;
+		top: 0;
+		right: -544px;
+		opacity: 0.2;
+		filter: alpha(opacity=20);
+	}
+
+	.hide{
+		display:none;
+	}
+
+	.hiddenLeft{
+		position:absolute;
+		left:-817px;
+		top:0px;
+		opacity:0;
+	}
+
+	.hiddenRight{
+		position:absolute;
+		top:0px;
+		opacity:0;
+	}
+
+	.scrollContrl{
+		position: absolute;
+		left: 50%;
+		bottom: 43px;	
+		width: 200px;
+		height: 32px;
+		margin-left: -449px;
+		overflow:hidden;
+		display:block;
+		z-index:100;
+	}
+
+	.scrollContrl span{
+		cursor: pointer;
+	}
+/* notification start */
+	#notification{
+		float: left;
+		width: 407px;
+		height: 425px;
+		background-color:#f2f2f2;
+	}
+
+	#notification .notificationRight{
+		height: 27px;
+		line-height: 27px;
+		border-bottom: 3px solid #27ae61;
+	}
+		.tabMenu{
+			overflow: hidden;
+			height: 420px;
+			padding-top: 3px;
+		}
+
+			.tabMenu .tabCtr{
+				font-family: "Microsoft YaHei";
+				float: left;
+				width: 100px;
+				min-height:340px;
+				background: #005da0;
+				vertical-align: middle;
+				padding-top: 20px;
+			}
+				.tabCtr li{
+					height: 30px;
+					line-height: 30px;
+					text-align:center;
+				}
+					.tabCtr a{
+						text-decoration:none;
+						font-size:14px;
+						color:#FFF;
+					}
+				.tabMenu .selected{
+					background: #F2F2F2;
+					color: #005da0;
+				}
+					.tabMenu .selected a{
+						color: #005da0;
+					}
+
+			.tabBox{
+				margin-left: 100px;
+				padding-top: 20px;
+			}
+				.tabBox p{
+					padding: 0px 12px;
+					margin-bottom: 8px;
+				}
+				.tabBox p {
+   					color: #A1A1A1;
+    				font-size: 12px;
+				}
+				.tabBox a{
+					text-decoration:none;
+					font-size: 12px;
+					color: #5e5e5e;
+				}
+				.tabBox a:hover{
+					color:red;
+				}
+
+		
+
+			.hide{
+				display:none;
+			}
+
+	.newsDescribe{
+		position:absolute;
+		top:185px;
+		height:40px;
+		z-index:100;
+		width:1000px;
+	}
+
+	.newsDescribe p{
+		background-color:rgba(255,255,255,.7);
+		filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#9FFFFFFF,endcolorstr=#9FFFFFFF);
+		max-width:750px;
+		font-family:"Microsoft YaHei";
+		color:#363636;
+		height:40px;
+		padding-top:10px;
+		padding:0px;
+		margin:0px;
+		margin-left:50px;
+		text-align:left;
+		padding-left:18px;
+		line-height: 2.4;
+		float:left;
+		min-width:500px;
+		
+	}
+
+	.newsDescribe a{
+		display:block;
+		font-family:"Microsoft YaHei";
+		padding-left:25px;
+		width:80px;
+		height:40px;
+		color:white;
+		font-style:italic;
+		text-align:left;
+		float:left;
+		line-height: 2.4;
+	}
+	
+	.newsDescribe p span{
+		min-width:500px;
+		display:block-inline;
+		height:40px;
+	}
+
+	.newsDescribe a:hover{
+		background-color:black;
+	}
+	/* notification end */
+
+	/* news start */
+	#news{
+		width:580px;
+		height:350px;
+		z-index:10;
+		position:relative;
+		float: right;
+	}
+		.newsTitle{
+			width:100%;
+			height: 30px;
+			margin-top: 10px;
+			overflow: hidden;
+		}
+			.newsTitle .right{
+				height: 27px;
+				line-height: 27px;
+				border-bottom: 3px solid #eeaf79;
+			}
+				.newsTitle h2{
+					float: left;
+					margin-left: 15px;
+				}
+				.newsTitle a{
+					margin-right:8px;
+					font-size:12px;
+					color:#7c7c7c;
+					float:right;
+				}
+		.newsList{
+			height: 300px;
+			padding-top: 3px;
+		}
+			#news .newsList p{
+				margin:0;
+				margin-left:15px;
+				display:block;
+				height:30px;
+				line-height:30px;
+				font-size:12px;
+				color: red;
+				border-bottom:dashed 1px #CCCCCC;
+			}
+				#news .newsList img{
+					margin-right:10px;
+					margin-top:10px;
+				}
+				#news span{
+					float:left;
+					margin-left:5px;
+				}
+				#news #time{
+					float:right;
+					margin-right:10px;
+					color: #295279;
+				}
+	/* news end */
+
+
+	/*focus start*/
+	#focus{
+		width:580px;
+		height:200px;
+		float: right;
+		z-index:10;
+		position:relative;
+	}
+
+		.focusList{
+			height: 200px;
+			padding-top: 3px;
+		}
+
+		#focus .focusRight{
+			height: 27px;
+			line-height: 27px;
+			border-bottom: 3px solid #e74b3c;
+		}
+
+		#focus .focusList p{
+				margin:0;
+				margin-left:15px;
+				display:block;
+				height:30px;
+				line-height:30px;
+				font-size:12px;
+				color: red;
+				border-bottom:dashed 1px #CCCCCC;
+			}
+				#focus .focusList img{
+					margin-right:10px;
+					margin-top:10px;
+				}
+
+				#focus span{
+					float:left;
+					margin-left:5px;
+				}
+				#focus #time{
+					float:right;
+					margin-right:10px;
+					color: #295279;
+				}
+	/*focus end*/
+	/*academic start*/
+	#academic{
+		height:120px;
+		margin-top:5px;
+		width:407px;
+		border-top:3px solid #a369bd;
+		border-bottom:3px solid #a369bd;
+		background:#F2F2F2;
+		float:right;
+	}
+		#academicHead{
+			display:inline-block;
+			padding:8px;
+			background-color:#a369bd;
+			color:white;
+			font-size:14px;
+			font-weight:800;
+			float:left;
+		}
+
+		#academicList{
+			height:100px;
+			width:300px;
+			float:right;
+		}
+
+		#academicList p{
+			font-size:12px;
+			margin-top:10px;
+			color:#838383;
+		}
+
+		#academicFooter{
+			clear:both;
+			float:right;
+			width:100px;
+			text-align:right;
+		}
+
+		#academicFooter a{
+			color:#838383;
+			font-size:12px;
+			margin-right:8px;
+		}
+	/*academic end*/

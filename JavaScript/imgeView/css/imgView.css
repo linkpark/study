@@ -1,0 +1,126 @@
+*{
+	margin:0;
+	padding:0;
+}
+		.imgMain{
+			height:700px;
+			width:600px;
+			margin:0 auto;
+		}
+        
+           
+		.selected{
+			border:1px solid red;
+		}
+
+		#smallImge{
+			width:600px;
+			height:120px;
+		}
+
+		.imgRotate{
+			height:110px;
+			width:477px;
+			float:left;
+			position:relative;
+			overflow: hidden;
+			margin-top:30px;
+		}
+
+		.imgRotate img{
+			width:120px;
+			height:108px;
+			cursor:pointer;
+		}
+
+		.imgRotate ul{
+			height:108px;
+			width:10000px;
+			position:absolute;
+			left:0;
+		}
+
+		.imgRotate ul li{
+			height:108px;
+			width:120px;
+			padding:0;
+			margin-right:8px;
+			float:left;
+		}
+
+		.preview{
+			width:543px;
+			height:350px;
+			float:left;
+			padding:10px;
+		}
+
+		.describe{
+			position:relative;
+			z-index:2;
+			width:543px;
+			height:30px;
+			line-height:30px;
+			text-align:center;
+			background-color:black;
+			opacity:0;
+			color:white;
+			font-weight:800;
+		}
+
+		.preview img{
+			width:543px;
+			height:350px;
+		}
+
+		#pre{
+			cursor:pointer;
+			float:left;
+			height:100px;
+			margin-right:10px;
+			margin-left:10px;
+			margin-top:30px;
+		}
+
+		#next{
+			cursor:pointer;
+			float:left;
+			height:100px;
+			margin-left:10px;
+			margin-top:30px;
+		}
+
+		#attachmentControl{
+			float:left;
+			width:400px;
+			height:200px;
+		}
+		#attachmentControl p{
+			margin-top:30px;
+		}
+
+		#uploadedAttachment{
+			float:right;
+			width:500px;
+			height:200px;
+		}
+
+		#uploadedAttachment p{
+			text-align:right;
+			display:block;
+			height:30px;
+			font-size:16px;
+			color:#5F5F5F;
+			border-bottom:dashed 1px #5F5F5F;
+		}
+		#uploadedAttachment p a{
+			margin-left:300px;
+			color:#567EC6;
+		}
+
+		#uploadedAttachment p a:hover{
+			color:red;
+		}
+
+
+		
