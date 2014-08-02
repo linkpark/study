@@ -1,11 +1,12 @@
 menu:
-  Home: /
-  Archives: /archives
+  主页: /
+  存档: /archives
+  关于: /about
 
 widgets:
 - search
 - category
-- tag
+- tagcloud
 
 excerpt_link: Read More
 
