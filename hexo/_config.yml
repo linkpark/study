@@ -90,3 +90,12 @@ deploy:
   repository: https://github.com/linkpark/linkpark.github.io.git
   branch: master
 
+
+feed:
+  type:atom
+  path:atom.xml
+  limit:20
+
+plugins:
+- hexo-generator-sitemap
+- hexo-generator-feed

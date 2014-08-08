@@ -2,11 +2,13 @@ menu:
   主页: /
   存档: /archives
   关于: /about
+  RSS: /atom.xml
 
 widgets:
 - search
 - category
 - tagcloud
+- recent_posts
 
 excerpt_link: Read More
 
@@ -26,7 +28,7 @@ addthis:
 fancybox: true
 
 google_analytics:
-rss:
+rss: /atom.xml
 
 comment_provider: facebook
 # Facebook comment
