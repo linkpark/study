@@ -5,7 +5,8 @@ tags: [hexo,博客]
 ---
 
 一直以来，都想搭建一个自己的博客，然一直愁于时间问题还有平台选型问题，WordPress虽好，但感觉太重，而且搭建博客需要租服务器，购买域名之类的，我本散淡之人，不喜麻烦，于是作罢。
-但一个偶然机会，在发现同学都在用github，并且github提供免费的博客系统github page，感觉挺有意思的，并且定制性很强，适合懂技术的童鞋。于是，我便开始折腾如何在github上搭建博客。先前有过web前端开发基础，听说js也可以开发后台——node.js，兴趣使然，在这篇文章[node.js学习路线图](http://mp.weixin.qq.com/s?__biz=MjM5NzA1MTcyMA==&mid=201160414&idx=2&sn=d8d60bc6c1f9fd1b3bac5ecb6b120867&scene=2&from=timeline&isappinstalled=0#rd)看到了Hexo这玩意儿，并且这玩意儿正好能搭建咋github上，真是无巧不成章，正好我个人对node.js比较感兴趣，而且又期望在github上搭建自己的博客，只要你肯找，这世上还真有这样两全其美的事儿^_^。<!-- more -->
+
+但一个偶然机会，发现同学都在用github，并且github提供免费的博客系统github page，感觉挺有意思的，定制性很强，适合懂技术的童鞋。于是，我便开始折腾如何在github上搭建博客。先前有过web前端开发基础，听说js也可以开发后台——node.js，兴趣使然，在这篇文章[node.js学习路线图](http://mp.weixin.qq.com/s?__biz=MjM5NzA1MTcyMA==&mid=201160414&idx=2&sn=d8d60bc6c1f9fd1b3bac5ecb6b120867&scene=2&from=timeline&isappinstalled=0#rd)看到了Hexo这玩意儿，并且这玩意儿正好能搭建在github上，真是无巧不成章，正好我个人对node.js比较感兴趣，而且又期望在github上搭建自己的博客，只要你肯找，这世上还真有这样两全其美的事儿^_^。<!-- more -->
 
 搭建这个博客，参考的最多的是这个博客系列[Zippera's blog](http://zipperary.com/categories/hexo/)，灰常感谢博主的分享。好了废话不多说，赶紧进入正题，hexo基于nodejs，自然需要nodejs的支持，安装的系统环境，在 linux和windows下我都试过，分别介绍一下吧。
 
