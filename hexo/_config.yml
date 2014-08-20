@@ -85,11 +85,15 @@ exclude_generator:
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
+#deploy:
+#  type: github
+#  repository: https://github.com/linkpark/linkpark.github.io.git
+#  branch: master
+
 deploy:
   type: github
-  repository: https://github.com/linkpark/linkpark.github.io.git
-  branch: master
-
+  repository: git@gitcafe.com:linkpark/linkpark.git
+  branch: gitcafe-pages
 
 feed:
   type:atom
