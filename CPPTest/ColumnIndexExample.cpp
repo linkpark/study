@@ -8,6 +8,7 @@
 #include <cstring>
 using namespace std;
 
+//全局字典
 map< string,int > dic;
 
 vector< int > 
