@@ -4,9 +4,25 @@
 #include <set>
 #include <string>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 map< string,int > dic;
+
+vector< int > 
+generateAttributeVector(const char *path,int length){
+    ifstream inputFile(path);
+    vector< int > attributeVector(length);
+    string word;
+    int i = 0;
+
+    while(!inputFile.eof()){
+        inputFile >> word;
+        attributeVector[ i ] = dic[ word ];
+    }
+
+    return attributeVector;   
+}
 
 int generateDic(const char* path){
     ifstream inputFile(path);
