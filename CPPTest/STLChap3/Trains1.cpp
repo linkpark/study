@@ -44,5 +44,7 @@ int main(){
     cout << func(p) <<endl;
     cout << func(a) <<endl;
     cout << func(ptr) << endl;
+
+    return 0;
 }
 
