@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//自定义迭代器
 template <class T>
 struct MyIter{
     typedef T value_type;
@@ -10,6 +11,7 @@ struct MyIter{
     T& operator*() const{ return *ptr;}
 };
 
+//Traits编程技法
 template <class T>
 class Traits{
 public:
@@ -42,5 +44,7 @@ int main(){
     cout << func(p) <<endl;
     cout << func(a) <<endl;
     cout << func(ptr) << endl;
+
+    return 0;
 }
 
