@@ -49,14 +49,18 @@ generateDic(const char* path){
 
 vector< int >
 generateIndexVector(vector<int> &attributeVector){
-    vector<int> indexVector(dic.size());
+    vector<int> indexVector(dic.size()); 
     int *valueCount = new int(dic.size());
+
     memset(valueCount,0,dic.size() * sizeof(int));
+
     for(vector<int>::iterator ix = attributeVector.begin(); 
             ix !=attributeVector.end();ix++ ){
         valueCount[*ix]++;  
     }
+
     indexVector[0] = 0;
+
     for(unsigned long i = 0; i < dic.size() -1 ;i++){
         indexVector[i+1] = indexVector[i] + valueCount[i];
     }
@@ -69,6 +73,7 @@ generatePositionVector(vector<int> &attributeVector,
         vector<int> &indexVector){
     vector<int> positionVector(attributeVector.size(),-1);
     int i =0;
+
     for(vector<int>::iterator ix = attributeVector.begin();
             ix != attributeVector.end();ix++){
         int offset = indexVector[*ix];
@@ -78,6 +83,7 @@ generatePositionVector(vector<int> &attributeVector,
         positionVector[offset] = i;
         i++;
     }          
+
     return positionVector;
 }
 
