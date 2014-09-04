@@ -51,7 +51,7 @@ generateDic(const char* path, vector<string> &oldDic){
 
 vector< int >
 generateIndexVector(vector<int> &attributeVector){
-    vector<int> indexVector(dic.size()); 
+    vector<int> indexVector(dic.size() + 1); 
     int *valueCount = new int(dic.size());
 
     memset(valueCount,0,dic.size() * sizeof(int));
@@ -63,7 +63,7 @@ generateIndexVector(vector<int> &attributeVector){
 
     indexVector[0] = 0;
 
-    for(unsigned long i = 0; i < dic.size() -1 ;i++){
+    for(unsigned long i = 0; i < dic.size() ;i++){
         indexVector[i+1] = indexVector[i] + valueCount[i];
     }
 
@@ -140,16 +140,19 @@ void merge(
         
         processA = false;
         processB = false;
-
-        if(  d == deltaData.size() )
+        if( m == oldDic.size())
+            processA =false;
+        else if(  d == deltaData.size() )
             processA = true;
         else if(oldDic[m] <= deltaData[d] )
             processA = true;
         
-        if( oldDic[m] >= deltaData[d] || m == oldDic.size() )
-            processB = true;
-        else
+        if( d == deltaData.size())
             processB = false;
+        else if(  m == oldDic.size() )
+            processB = true;
+        else if( oldDic[m] >= deltaData[d] )
+            processB = true;
 
         if(processA){
             newDic.push_back( oldDic[m] );
@@ -173,7 +176,7 @@ void merge(
              count = wordCount[ deltaData[d] ];
 
              for(int i = 0 ; i < count  ;i ++)
-                 newPositionIndex[c + i] = oldPositionIndex.size() + i + 1;
+                 newPositionIndex[c + i] = oldPositionIndex.size() + d + i;
             
              c += count;
              d += count;
@@ -226,7 +229,18 @@ main(int argc,char **argv){
     cout << "old position Vector" <<endl;
     printVector(positionVector);
     printVector(deltaData);
+
     merge(positionVector, indexVector,oldDic,deltaData,newPositionVector,newIndexVector,newDic);
+    
+    cout << "new Dic" <<endl;
+    printVector(newDic);
+
+    cout << "new Index Vector" <<endl;
+    printVector(newIndexVector);
+
+    cout << "new Position Vector" <<endl;
+    printVector(newPositionVector);
+
     return 0;
 }
 
