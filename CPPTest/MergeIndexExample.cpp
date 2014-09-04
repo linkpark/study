@@ -27,7 +27,7 @@ generateAttributeVector(const char *path,int length){
 }
 
 int 
-generateDic(const char* path){
+generateDic(const char* path, vector<string> &oldDic){
     ifstream inputFile(path);
     string word;
     int count = 0;
@@ -42,6 +42,7 @@ generateDic(const char* path){
     
     for(set< string >::iterator ix = order.begin(); ix != order.end(); ix++){
         dic[*ix] = i;
+        oldDic.push_back( *ix );
         i++;
     }
     
@@ -88,8 +89,7 @@ generatePositionVector(vector<int> &attributeVector,
     return positionVector;
 }
 
-void 
-printDic(){
+void printDic(){
     cout << "dictionary table" <<endl;
     for(map<string,int>::iterator ix = dic.begin(); ix != dic.end();ix++){
         cout << ix->first <<" " << ix->second <<endl;
@@ -99,11 +99,9 @@ printDic(){
 vector< string > generateDeltaData(const char *path){
     ifstream inputFile(path);
     string word;
-    vector<string> DeltaData(2);
-    int i = 0;
+    vector<string> DeltaData;
     while(inputFile >> word){
-        DeltaData[i] = word;
-        i++;        
+        DeltaData.push_back(word);
     }   
 
     return DeltaData;
@@ -113,60 +111,91 @@ void merge(
         vector< int > &oldPositionIndex,
         vector< int > &oldOffsetIndex,
         vector< string > &oldDic,
+        vector< string > &deltaData, 
         vector< int > &newPositionIndex,
         vector< int > &newOffsetIndex,
-        vector< string > &deltaData, 
         vector< string > &newDic
         ){
 
-   vector< int > increaseVector;
-   map< string,int > wordCount;
-   unsigned long d(0),m(0),n(0),c(0);
-   int count;
-   
-   for(unsigned long i = 0; i < deltaData.size(); i ++){
+    vector< int > increaseVector(oldDic.size(),0);
+    map< string,int > wordCount;
+    unsigned long d(0),m(0),n(0),c(0);
+    int count;
+
+    for(unsigned long i = 0; i < deltaData.size(); i ++){
         if(wordCount.count( deltaData[i] ) == 0){
-            wordCount[ deltaData[i] ] = 1;
+            wordCount[ deltaData[i] ] = 0;
         }
 
         wordCount[ deltaData[i] ]++;
-   }
+    }
+    
+    newPositionIndex.resize( oldPositionIndex.size() + deltaData.size() );
+    bool processA = true;
+    bool processB = true;
 
-   while( d < deltaData.size() || m < dic.size()){
-       count = 0;
-       newOffsetIndex[n] = c;
-       if(oldDic[m] <= deltaData[d] || 
-               d == deltaData.size()){
-            newDic[n] = oldDic[m];
+    while( d != deltaData.size() || m != oldDic.size() ){
+        count = 0;
+        newOffsetIndex.push_back(c);
+        
+        processA = false;
+        processB = false;
+
+        if(  d == deltaData.size() )
+            processA = true;
+        else if(oldDic[m] <= deltaData[d] )
+            processA = true;
+        
+        if( oldDic[m] >= deltaData[d] || m == oldDic.size() )
+            processB = true;
+        else
+            processB = false;
+
+        if(processA){
+            newDic.push_back( oldDic[m] );
+
             increaseVector[m] = n - m;
+             
             count = oldOffsetIndex[m+1] - oldOffsetIndex[m]; 
             
             for(int i = oldOffsetIndex[m] ; i <oldOffsetIndex[m+1] ; i++){
-                newPositionIndex[c] = oldPositionIndex[i];
-                c++;
+                 newPositionIndex[c] = oldPositionIndex[i];
+                 c++;
             }
 
             m++;
+        }
 
-       }else if(deltaData[d] <= oldDic[m] || 
-               m == dic.size()){
-            newDic[n] = deltaData[d];
-            count = wordCount[ deltaData[d] ];
-            for(int i = 0 ; i < count  ;i ++)
-                newPositionIndex[c + i] = oldPositionIndex.size() + i + 1;
+        if(processB){
+            if(processA != processB)
+                newDic.push_back(deltaData[d]);
+
+             count = wordCount[ deltaData[d] ];
+
+             for(int i = 0 ; i < count  ;i ++)
+                 newPositionIndex[c + i] = oldPositionIndex.size() + i + 1;
             
-            c += count;
-            d += count;
-       }
+             c += count;
+             d += count;
+        }
         
         n++;
-   } 
+    } 
 }
 
+template <class T>
+void 
+printVector(T& vector){
+    int i = 0;
+    for(typename T::iterator ix = vector.begin() ; ix != vector.end(); ix++){
+        cout <<i << " " <<*ix << endl;
+        i++;
+    } 
+}
 
 int 
 main(int argc,char **argv){
-    if(2 != argc){
+    if(3 != argc){
         cout << "input error!" <<endl;
         return 1;
     }
@@ -174,37 +203,30 @@ main(int argc,char **argv){
     vector< int > attributeVector;
     vector< int > indexVector;
     vector< int > positionVector;
+    vector< string > oldDic; 
     vector< string > deltaData;
+    vector< int > newIndexVector;
+    vector< int > newPositionVector;
+    vector< string > newDic; 
     int n;
 
-    n = generateDic( argv[1]);
-    printDic();
-    attributeVector = generateAttributeVector(argv[1],n);
-    indexVector = generateIndexVector(attributeVector);
-    positionVector = generatePositionVector(attributeVector,indexVector);
-    deltaData = generateDeltaData("deltaData");
-
+    n = generateDic( argv[1],oldDic );
+    printVector(oldDic);
+    attributeVector = generateAttributeVector( argv[1],n );
+    indexVector = generateIndexVector( attributeVector );
+    positionVector = generatePositionVector( attributeVector,indexVector );
+    deltaData = generateDeltaData( argv[2] );
+    
     cout << "old attribute vector table" <<endl;
-    for(unsigned long i = 0; i < attributeVector.size(); i++){
-        cout <<i << " " << attributeVector[i] <<endl;
-    }
+    printVector(attributeVector);
 
-    cout <<endl;
-    
     cout << "old index vector table "<<endl;
-    for(unsigned long i = 0; i < indexVector.size(); i++){
-        cout << i << " " << indexVector[i] <<endl;
-    }
+    printVector(indexVector);
     
-    cout <<endl;
-
     cout << "old position Vector" <<endl;
-    for(unsigned long i = 0; i < positionVector.size(); i++){
-        cout << i << " " << positionVector[i] <<endl;    
-    }
-
-    cout << endl;
-
+    printVector(positionVector);
+    printVector(deltaData);
+    merge(positionVector, indexVector,oldDic,deltaData,newPositionVector,newIndexVector,newDic);
     return 0;
 }
 
