@@ -40,7 +40,7 @@ int main(int argc,char **argv){
     for(int i = 0 ; i < atoi( argv[2] ) ; i ++ ){
         count ++;
         word = createRandWord(i);
-        file << word << " ";
+        file << word << endl;
         if(count == 20 ){
             file << "\n";
             count = 0;

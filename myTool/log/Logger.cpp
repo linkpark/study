@@ -47,7 +47,9 @@ Logger::~Logger(){
     }
 }
 
-void Logger::createSingleLogger(){
+void 
+Logger::createSingleLogger()
+{
     m_pLog = new Logger();
 }
 
@@ -148,6 +150,7 @@ int Logger::flush(){
         return SUCCESSFUL;
 
     ssize_t r = write( m_iFd, m_pLogBuffer , m_nUsedBytesForBuffer );
+    
     if( -1 == r )
        return FAILED;
 
