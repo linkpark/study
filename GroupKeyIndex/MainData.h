@@ -3,12 +3,15 @@
 #include <vector>
 #include <map>
 #include <string>
+using namespace std;
 
 class MainData{
 public:
     vector< string >& getDic();
     vector< int >& getPositionVector();
     vector< int >& getIndexVector(); 
+    vector< int >& setPositionVector();
+    vector< int >& setIndexVector();
 
 private:
     vector< int > m_vIndexVector;
