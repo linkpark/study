@@ -1,9 +1,7 @@
 #ifndef ABSTRACTATTRIBUTEVECTOR_H_
 #define ABSTRACTATTRIBUTEVECTOR_H_
-
-#ifndef uint64_t 
-typedef unsigned long long uint64_t;
-#endif
+#include <cstddef>
+#include <cstdint>
 
 class AbstractAttributeVector{
 public:

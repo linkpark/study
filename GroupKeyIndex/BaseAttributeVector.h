@@ -10,12 +10,12 @@ public:
     
 /*interface list*/
 public:
-    virtual uint64_t getColumn()const = 0; 
+    virtual uint64_t getColumns()const = 0; 
     virtual void resize(size_t size) = 0;
 
     /*provide the base get and set function*/
     virtual T get(size_t row,size_t column) = 0;
-    virtual uint64_t set(size_t row,size_t column,T &value) =0;
+    virtual void set(size_t row,size_t column,T &value) =0;
     
     /*get the size of an object*/
     virtual size_t getSize()const = 0; 
