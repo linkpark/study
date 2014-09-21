@@ -6,11 +6,12 @@
 #include <fstream>
 #include <vector>
 #include <cstring>
+#include <sys/time.h>
+
 using namespace std;
 
 //全局字典
 map< string,int > dic;
-
 
 vector< int > 
 generateAttributeVector(const char *path,int length){
@@ -220,7 +221,7 @@ main(int argc,char **argv){
     positionVector = generatePositionVector( attributeVector,indexVector );
     deltaData = generateDeltaData( argv[2] );
     
-    cout << "old attribute vector table" <<endl;
+    /*cout << "old attribute vector table" <<endl;
     printVector(attributeVector);
 
     cout << "old index vector table "<<endl;
@@ -228,11 +229,18 @@ main(int argc,char **argv){
     
     cout << "old position Vector" <<endl;
     printVector(positionVector);
-    printVector(deltaData);
+    printVector(deltaData);*/
 
+    struct timeval begin,end;
+
+    gettimeofday(&begin,NULL);
     merge(positionVector, indexVector,oldDic,deltaData,newPositionVector,newIndexVector,newDic);
+    gettimeofday(&end,NULL);
     
-    cout << "new Dic" <<endl;
+    int time = (end.tv_sec - begin.tv_sec)*1000 + end.tv_usec - begin.tv_usec;
+    cout << "time :" << time <<endl;
+
+   /* cout << "new Dic" <<endl;
     printVector(newDic);
 
     cout << "new Index Vector" <<endl;
@@ -240,7 +248,7 @@ main(int argc,char **argv){
 
     cout << "new Position Vector" <<endl;
     printVector(newPositionVector);
-
+    */
     return 0;
 }
 

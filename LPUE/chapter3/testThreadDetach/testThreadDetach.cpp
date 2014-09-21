@@ -3,11 +3,14 @@
 #include <cstdlib>
 #include <pthread.h>
 #include <errno.h>
+#include <unistd.h>
 
 using namespace std;
 
 void *thread(void *arg){
+    int b = *(int*)arg;
 	cout << "in thread id=" << pthread_self() <<endl;
+    cout << b <<endl;
 	sleep(2);
 	pthread_detach(pthread_self());
 
@@ -19,7 +22,8 @@ void *thread(void *arg){
 
 int main(){
 	pthread_t tid;
-	if(pthread_create(&tid,NULL,thread,0) != 0){
+    int a = 3;
+	if(pthread_create(&tid,NULL,thread,&a) != 0){
 		cout <<"pthread_create error!"<<endl;
 		return 0;
 	}
