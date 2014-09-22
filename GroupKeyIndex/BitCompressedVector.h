@@ -3,6 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <string>
+#include <cstring>
 #include <stdexcept>
 
 #include "BaseAttributeVector.h"
@@ -34,8 +35,16 @@ public:
     }
     
     //resize the memory
-    void resize(size_t numberOfBlocks){
-         
+    void resize(size_t rowsNumber){
+        tStorageUnit *data;
+        uint64_t blockNumbers = rowsNumber * m_iColumns *tupleWidth() / bitWidth + 1;  
+        data = allocMemory(blockNumbers);
+        
+        memcpy( data , m_pData, m_iSize);
+        clear();
+        m_pData = data;
+
+        m_iSize = blockNumbers * sizeof(tStorageUnit);
     }
     
     void clear(){
@@ -74,11 +83,12 @@ public:
         auto block =  blockPosition(row) + ( offset + colOffset ) / bitWidth ;
 
         colOffset = ( offset + colOffset ) % bitWidth;
-
+    
+        //calculate the position of one number 
         uint64_t bounds = bitWidth - colOffset;
         uint64_t baseMask = ( 1ull << m_BitsForEachColumn[column] ) - 1ull;
-        uint64_t mask = ~(baseMask << colOffset);
-
+        uint64_t mask = ~( baseMask << colOffset );
+        
         m_pData[ block ] &= mask;
         m_pData[ block ] |= (((uint64_t)value & baseMask) << colOffset);
         
