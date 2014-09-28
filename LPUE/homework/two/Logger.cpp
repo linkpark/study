@@ -47,8 +47,7 @@ Logger::~Logger(){
     }
 }
 
-void 
-Logger::createSingleLogger()
+void Logger::createSingleLogger()
 {
     m_pLog = new Logger();
 }
