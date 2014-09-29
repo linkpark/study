@@ -5,10 +5,11 @@
 
 using namespace std;
 
+template <class T>
 class IndexBase{
 public:
-    virtual string searchByKey(string &key) = 0;
-    virtual vector< string > searchByKeyRange(string &start, string &end) = 0;
+    virtual string searchByKey(T &key) = 0;
+    virtual vector< string > searchByKeyRange(T &start, T &end) = 0;
 };
 
 #endif

@@ -12,6 +12,6 @@ public:
 
 private:
     int m_iCacheBlockNumber;
-    map<int,CacheBlock>     
+    map<int,CacheBlock> m_CacheBlockMap;    
 };
 #endif

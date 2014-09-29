@@ -4,10 +4,12 @@
 
 class MainData;
 class DeltaData;
-class GroupKeyIndex public IndexBase{
+
+template <class T>
+class GroupKeyIndex public IndexBase<T>{
 public:
-    virtual string searchByKey(string &key);
-    virtual vector<string> searchByKeyRange();
+    virtual string searchByKey(T &key);
+    virtual vector<T> searchByKeyRange();
 
 private:
     int mergeProcess();
