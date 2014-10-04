@@ -1,7 +1,6 @@
 #ifndef BASEATTRIBUTEVECTOR_H_
 #define BASEATTRIBUTEVECTOR_H_
 #include <sys/types.h>
-#include "AbstractAttributeVector.h"
 
 //compressed vector interface
 template <class T>
@@ -11,7 +10,6 @@ public:
     
 /*interface list*/
 public:
-    virtual uint64_t getColumns()const = 0; 
     virtual void resize(size_t size) = 0;
 
     /*provide the base get and set function*/

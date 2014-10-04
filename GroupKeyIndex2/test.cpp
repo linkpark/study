@@ -17,17 +17,17 @@ int main(int argc,char **argv){
     vector< size_t > bitsForEachColumn(2); 
     bitsForEachColumn[0] = bitWidth;
 
-    BitCompressedVector< int > bitCompressedVector(1,numberOfRows,bitsForEachColumn);
+    BitCompressedVector< int > bitCompressedVector(numberOfRows,bitWidth);
     bitCompressedVector.allocData();
     
     for(size_t i = 0 ; i < numberOfRows ; i ++){
-        bitCompressedVector.set(i,0,value);
+        bitCompressedVector.set(i,value);
         value++;
     }
 
-    /*for(size_t i = 0; i < numberOfRows ; i ++){
-        cout << bitCompressedVector.get(i,0) <<endl;
-    }*/
+    for(size_t i = 0; i < numberOfRows ; i ++){
+        cout << bitCompressedVector.get(i) <<endl;
+    }
     int originSize = sizeof(int) * numberOfRows;
     int compressedSize = bitCompressedVector.getSize();
     

@@ -16,10 +16,10 @@ private:
     const static uint64_t bitWidth = sizeof( tStorageUnit ) * 8;
 
 public:
-    BitCompressedVector(size_t rows,size_t bitsForColumn = {} )
-        :m_pData(nullptr),m_iRows(rows),m_BitsForEachColumn(bitsForEachColumn){
+    BitCompressedVector(size_t rows,size_t bitsForColumn = 0)
+        :m_pData(nullptr),m_iRows(rows),m_BitsForColumn(bitsForColumn){
         //if the bits is unset, then behave like a normal vector
-        if( 0 == m_BitsForEachColumn.size() ){
+        if( 0 == m_BitsForColumn ){
             m_BitsForColumn = sizeof(T) * 8;
         } 
     }
@@ -99,9 +99,9 @@ public:
     }
 
     void allocData(){
-        uint64_t blockNumbers = (m_BitsForColumn * m_iRows ) / bitWidth + 1;
-        m_pData = allocMemory(blockNumbers); 
-        m_iSize = sizeof(tStorageUnit) * blockNumbers;
+        uint64_t blockNumbers = ( m_BitsForColumn * m_iRows ) / bitWidth + 1;
+        m_pData = allocMemory( blockNumbers ); 
+        m_iSize = sizeof( tStorageUnit ) * blockNumbers;
     }
     
 //inline function list
