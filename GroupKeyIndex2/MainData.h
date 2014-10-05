@@ -2,21 +2,25 @@
 #define MAINDATA_H_
 #include <vector>
 #include <map>
-#include <string>
+
+#include "BitCompressedVector.h"
+
 using namespace std;
 
+template< class T >
 class MainData{
 public:
-    vector< string >& getDic();
-    vector< int >& getPositionVector();
-    vector< int >& getIndexVector(); 
-    vector< int >& setPositionVector();
-    vector< int >& setIndexVector();
+    vector< T >& getDic();
+    BitCompressedVector< uint64_t >& getPositionVector();
+    BitCompressedVector< uint64_t >& getIndexVector(); 
+    BitCompressedVector< uint64_t >& setPositionVector();
+    BitCompressedVector< uint64_t >& setIndexVector();
 
 private:
-    vector< int > m_vIndexVector;
-    vector< int > m_vPositionVector;
-    vector< string > m_vDic;   
+    BitCompressedVector< uint64_t > m_IndexVector;
+    BitCompressedVector< uint64_t > m_PositionVector;
+    BitCompressedVector< uint64_t > m_AttributeVector;
+    vector< T > m_Dictionary; 
 };
 
 #endif

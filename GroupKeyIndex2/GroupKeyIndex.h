@@ -6,11 +6,24 @@ class MainData;
 class DeltaData;
 
 template <class T>
-class GroupKeyIndex public ColumnIndexBase<T>{
+class GroupKeyIndex final:public ColumnIndexBase<T>{
 public:
-    virtual string searchByKey(T &key);
-    virtual vector<T> searchByKeyRange();
+    vector<uint64_t> searchByKey( T &key );
+    vector<uint64_t> searchByKeyRange( T &start, T &end );
+    
+    batchImport( vector<T> &dataList );
 
+    T searchByRowId( uint64_t rowId );
+
+public:
+    GroupKeyIndex();
+    ~GroupKeyIndex();
+
+//forbidden copy constructe function
+private:
+    GroupKeyIndex(const GroupKeyIndex<T>&);
+    GroupKeyIndex<T>& operator=(const GroupKeyIndex<T>&);
+    
 private:
     int mergeProcess();
 
