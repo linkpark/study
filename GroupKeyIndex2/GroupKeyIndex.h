@@ -1,3 +1,19 @@
+/*
+ * =================================================================
+ *
+ *            Filename:    GroupKeyIndex.h
+ *
+ *         Description:    group key index class,implement of the group key
+ *                         index.
+ *             Version:    v1.0
+ *             Created:    2014-10-05 11:28
+ *           Reversion:    none
+ *            Compiler:    g++
+ *            
+ *              Author:    wangjin, 836792834@qq.com
+ * 
+ * ==================================================================
+ */
 #ifdef GROUPKEYINDEX_H_
 #define GROUPKEYINDEX_H_
 #include "ColumnIndexBase.h"

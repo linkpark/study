@@ -1,3 +1,19 @@
+/*
+ * =================================================================
+ *
+ *            Filename:    BitCompressedVector.h
+ *
+ *         Description:    the vector based on bit compress 
+ *
+ *             Version:    v1.0
+ *             Created:    2014-10-05 11:25
+ *           Reversion:    none
+ *            Compiler:    g++
+ *            
+ *              Author:    wangjin, 836792834@qq.com
+ * 
+ * ==================================================================
+ */
 #ifndef BITCOMPRESSEDVECTOR_H_
 #define BITCOMPRESSEDVECTOR_H_
 #include <cmath>
@@ -12,8 +28,8 @@ template <class T>
 class BitCompressedVector final:public BaseAttributeVector<T>{
 private:
     typedef T tTypeName;
-    typedef uint64_t tStorageUnit;
-    const static uint64_t bitWidth = sizeof( tStorageUnit ) * 8;
+    typedef uint64_t storage_unit_t;
+    const static uint64_t bitWidth = sizeof( storage_unit_t ) * 8;
 
 public:
     BitCompressedVector(size_t rows,size_t bitsForColumn = 0)
@@ -31,7 +47,7 @@ public:
 public:
     //resize the memory
     void resize(size_t rowsNumber){
-        tStorageUnit *data;
+        storage_unit_t *data;
         uint64_t blockNumbers = rowsNumber  * m_BitsForColumn / bitWidth + 1;  
        
         data = allocMemory(blockNumbers);
@@ -40,7 +56,7 @@ public:
         clear();
         m_pData = data;
 
-        m_iSize = blockNumbers * sizeof(tStorageUnit);
+        m_iSize = blockNumbers * sizeof(storage_unit_t);
     }
     
     void clear(){
@@ -101,7 +117,7 @@ public:
     void allocData(){
         uint64_t blockNumbers = ( m_BitsForColumn * m_iRows ) / bitWidth + 1;
         m_pData = allocMemory( blockNumbers ); 
-        m_iSize = sizeof( tStorageUnit ) * blockNumbers;
+        m_iSize = sizeof( storage_unit_t ) * blockNumbers;
     }
     
 //inline function list
@@ -118,8 +134,8 @@ private:
         return ((rows * m_BitsForColumn  + bitWidth - 1 ) / bitWidth);
     }
 
-    inline tStorageUnit* allocMemory(uint64_t blockNumbers){
-         auto data = static_cast< tStorageUnit* >( malloc(blockNumbers * sizeof(tStorageUnit)) );
+    inline storage_unit_t* allocMemory(uint64_t blockNumbers){
+         auto data = static_cast< storage_unit_t* >( malloc(blockNumbers * sizeof(storage_unit_t)) );
 
         if(nullptr == data){
             throw std::bad_alloc();
@@ -140,7 +156,7 @@ private:
     uint64_t m_iBlocks;
 
     size_t m_BitsForColumn;
-    tStorageUnit *m_pData;
+    storage_unit_t *m_pData;
 };
 
 #endif

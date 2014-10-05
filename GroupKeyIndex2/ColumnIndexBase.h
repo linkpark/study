@@ -1,3 +1,19 @@
+/*
+ * =================================================================
+ *
+ *            Filename:    ColumnIndexBase.h
+ *
+ *         Description:    column index base class 
+ *
+ *             Version:    v1.0
+ *             Created:    2014-10-05 11:27
+ *           Reversion:    none
+ *            Compiler:    g++
+ *            
+ *              Author:    wangjin, 836792834@qq.com
+ * 
+ * ==================================================================
+ */
 #ifdef COLUMNINDEXBASE_H_
 #define COLUMNINDEXBASE_H_
 #include <string>
