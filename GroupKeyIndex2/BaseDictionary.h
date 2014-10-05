@@ -18,13 +18,13 @@
 #define BASEDICTIONARY_H_
 #include <sys/types.h>
 #include <stdexcept>
+#include "types.h"
 
 template<class T>
 class BaseDictionary{
-protected:
-    typedef uint32_t value_id_t;
-
 public:
+    virtual ~BaseDictionary(){}
+
     virtual value_id_t addValue( T &value ) = 0;
     
     virtual T getValueByValueId( value_id_t valueId ) = 0;
@@ -33,7 +33,7 @@ public:
     virtual const T getGreatestValue() = 0;
 
     virtual bool isValueExists( value_id_t valueId ) = 0;
-       
+    virtual bool isOrdered() = 0;
 };
 
 #endif

@@ -27,7 +27,7 @@
 template <class T>
 class BitCompressedVector final:public BaseAttributeVector<T>{
 private:
-    typedef T tTypeName;
+    typedef T type_name_t;
     typedef uint64_t storage_unit_t;
     const static uint64_t bitWidth = sizeof( storage_unit_t ) * 8;
 
