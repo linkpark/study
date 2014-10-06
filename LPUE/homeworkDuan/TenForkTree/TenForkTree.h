@@ -1,3 +1,19 @@
+/*
+ * =================================================================
+ *
+ *            Filename:    TenForkTree.h
+ *
+ *         Description:    
+ *
+ *             Version:    v1.0
+ *             Created:    2014-10-06 16:28
+ *           Reversion:    none
+ *            Compiler:    g++
+ *            
+ *              Author:    wangjin, 836792834@qq.com
+ * 
+ * ==================================================================
+ */
 #ifndef TENFORKTREE_H_
 #define TENFORKTREE_H_
 #define TREEFORKNUMBER 10

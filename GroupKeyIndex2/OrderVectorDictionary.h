@@ -3,7 +3,7 @@
  *
  *            Filename:    OrderVectorDictionary.h
  *
- *         Description:    
+ *         Description:    an ordered dictionary using vector to store 
  *
  *             Version:    v1.0
  *             Created:    2014-10-05 15:48
@@ -25,10 +25,11 @@ private:
     typedef std::vector<T> vector_type;
 
 public:
-    OrderVectorDictionary();
-    ~OrderVectorDictionary();
+    OrderVectorDictionary(){}
+    ~OrderVectorDictionary(){}
 
 public:
+    value_id_t constructDictionaryByVector(std::vector<T> &originData);
     value_id_t addValue( T &value );
     
     T getValueByValueId( value_id_t valueId);

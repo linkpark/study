@@ -3,7 +3,7 @@
  *
  *            Filename:    DictionaryBase.h
  *
- *         Description:    
+ *         Description:    dictinary base class 
  *
  *             Version:    v1.0
  *             Created:    2014-10-05 14:56
@@ -25,8 +25,7 @@ class BaseDictionary{
 public:
     virtual ~BaseDictionary(){}
 
-    virtual value_id_t addValue( T &value ) = 0;
-    
+    virtual value_id_t addValue( T &value ) = 0; 
     virtual T getValueByValueId( value_id_t valueId ) = 0;
     
     virtual const T getSmallestValue() = 0;

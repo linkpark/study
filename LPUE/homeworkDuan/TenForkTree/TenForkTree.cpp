@@ -1,3 +1,19 @@
+/*
+ * =================================================================
+ *
+ *            Filename:    TenForkTree.cpp
+ *
+ *         Description:    
+ *
+ *             Version:    v1.0
+ *             Created:    2014-10-06 16:28
+ *           Reversion:    none
+ *            Compiler:    g++
+ *            
+ *              Author:    wangjin, 836792834@qq.com
+ * 
+ * ==================================================================
+ */
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -27,3 +43,4 @@ int TenForkTree<T>::deserialize(const char* filePath){
         } 
     }
 }
+
