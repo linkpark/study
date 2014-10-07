@@ -113,12 +113,8 @@ private:
         for(int i = 0 ;i < nodePtr -> childNumber ; ++i)
             freeTreeNode(nodePtr->next[i]);
 
-            delete nodePtr;
-            nodePtr = nullptr;
-        }else{
-            delete nodePtr;
-            nodePtr = nullptr;
-        }
+        delete nodePtr;
+        nodePtr = nullptr;
     }
 
     void preorder(struct node<T> *nodePtr){
