@@ -27,10 +27,11 @@ public:
 
     virtual value_id_t addValue( T &value ) = 0; 
     virtual T getValueByValueId( value_id_t valueId ) = 0;
-    
+    virtual value_id_t findValueIdForValue( T &value ) = 0;
+
     virtual const T getSmallestValue() = 0;
     virtual const T getGreatestValue() = 0;
-
+    
     virtual bool isValueExists( value_id_t valueId ) = 0;
     virtual bool isOrdered() = 0;
 };

@@ -33,6 +33,7 @@ public:
     value_id_t addValue( T &value );
     
     T getValueByValueId( value_id_t valueId);
+    value_id_t findValueIdForValue( T &value );
     
     const T getSmallestValue();
     const T getGreatestValue();
