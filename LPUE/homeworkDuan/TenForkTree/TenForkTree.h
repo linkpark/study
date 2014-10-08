@@ -128,7 +128,6 @@ private:
 private:
     struct node<T> *m_pRoot;
     struct node<T> *m_pCurrentPosition;
-    queue< node<T>* > m_levelTraversalQueue;
 };
 
 #endif
