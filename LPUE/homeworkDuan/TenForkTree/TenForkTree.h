@@ -17,6 +17,9 @@
 #ifndef TENFORKTREE_H_
 #define TENFORKTREE_H_
 #define TREEFORKNUMBER 10
+#include <stdlib.h>
+#include <time.h>
+
 #include <fstream>
 #include <iostream>
 #include <queue>
@@ -37,6 +40,7 @@ template<class T>
 class TenForkTree{
 public:
     TenForkTree():m_pRoot(nullptr),m_pCurrentPosition(nullptr){
+        srand( (unsigned)time(NULL) ); 
     }
 
     ~TenForkTree(){
@@ -72,8 +76,12 @@ public:
         preorder(m_pRoot);
     }
 
-private:
 
+    void constructRandomTree(int treeDepth){
+        
+    }
+
+private:    
     /*****************************************
     *  Function name: deserializeNode
     *    Description: 反序列化节点，由于需要改变指针本身的值
@@ -109,9 +117,9 @@ private:
     }
 
     void freeTreeNode(struct node<T> *nodePtr){
-        if( nodePtr->childNumber != 0){
-        for(int i = 0 ;i < nodePtr -> childNumber ; ++i)
-            freeTreeNode(nodePtr->next[i]);
+        if( nodePtr->childNumber != 0)
+            for(int i = 0 ;i < nodePtr -> childNumber ; ++i)
+                freeTreeNode(nodePtr->next[i]);
 
         delete nodePtr;
         nodePtr = nullptr;
@@ -124,6 +132,9 @@ private:
         }
     }
 
+    inline int createRandomNumber(int begin,int end){
+        return (( rand() % (end - begin + 1) ) + begin);
+    }
 
 private:
     struct node<T> *m_pRoot;

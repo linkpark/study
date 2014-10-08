@@ -6,12 +6,15 @@ int main(int argc,char **argv){
         return 0;
     }
 
+    srand( time(NULL) );
     TenForkTree<string> t;
     t.deserialize( argv[1] ); 
     t.serialize( argv[2] );
+    t.constructRandomTree(1);
     t.preorderTraversal();
 
     t.destoryTheTree();
 
     return 0;
 }
+
