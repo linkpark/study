@@ -23,6 +23,7 @@
 #include <fstream>
 #include <iostream>
 #include <queue>
+#include <string>
 
 using namespace std;
 
@@ -76,12 +77,12 @@ public:
         preorder(m_pRoot);
     }
 
-
-    void constructRandomTree(int treeDepth){
-        
-    }
+    void constructRandomTree(int treeDepth);
 
 private:    
+    /*node节点的特化*/
+    void constructRandomTreeNode(struct node<T> **nodePtr,int treeDepth);
+
     /*****************************************
     *  Function name: deserializeNode
     *    Description: 反序列化节点，由于需要改变指针本身的值
@@ -126,7 +127,7 @@ private:
     }
 
     void preorder(struct node<T> *nodePtr){
-        cout << nodePtr->value << endl;
+        cout << nodePtr->value << " ";
         for(int i = 0; i < nodePtr->childNumber ; i++){
             preorder( nodePtr->next[i] );
         }
@@ -140,5 +141,27 @@ private:
     struct node<T> *m_pRoot;
     struct node<T> *m_pCurrentPosition;
 };
+
+/*特化树的构造树的函数*/
+template<>
+void TenForkTree<string>::constructRandomTreeNode(node<string> **nodePtr, int treeDepth){
+    string value( 1,'a' + createRandomNumber(0,26) );
+    
+    (*nodePtr) = new struct node<string>();
+    (*nodePtr)->value = value;
+
+    if(treeDepth != 0){
+        (*nodePtr)->childNumber = createRandomNumber( 1,10 );
+        for(int i = 0 ; i < (*nodePtr)->childNumber ; ++i )
+            constructRandomTreeNode( &((*nodePtr)->next[i]) , treeDepth - 1 );
+    }else{
+        (*nodePtr)->childNumber = 0;
+    }
+}
+
+template<>
+void TenForkTree<string>::constructRandomTree(int treeDepth){
+    constructRandomTreeNode( &m_pRoot, treeDepth-1 );
+}
 
 #endif
