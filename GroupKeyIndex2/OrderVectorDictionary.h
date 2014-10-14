@@ -107,6 +107,10 @@ public:
         return true;
     }
 
+    size_t getSize()const{
+        return m_Values.size();
+    }
+
 private:
     vector_type m_Values;
 };
