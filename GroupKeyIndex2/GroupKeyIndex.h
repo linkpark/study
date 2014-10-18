@@ -46,7 +46,11 @@ public:
     T searchByRowId( uint64_t rowId );
 
 public:
-    GroupKeyIndex(){
+    GroupKeyIndex():
+        m_IndexVector(nullptr),
+        m_PositionVector(nullptr),
+        m_AttributeVector(nullptr){
+
         m_Dictionary = std::make_shared< dic_t >(); 
     }
 
@@ -57,19 +61,9 @@ public:
         if(dicNumber == 0)
             throw std::logic_error("empty dictionary");
         
-        size_t rows = originData.size();
-        size_t bitsForColumn = (size_t)(log2(rows));
-        uint64_t valueId;
-
-        m_AttributeVector = std::make_shared< vector_ptr_t >( rows,bitsForColumn );
-        m_AttributeVector.allocData();
-
-        //set the attribute vector
-        for(size_t i = 0; i < originData.size() ; ++i){
-            valueId = m_Dictionary->findValueIdByValue( originData[i] );
-            m_AttributeVector.set( i , valueId );
-        }
+        generateAttributeVector( originData );
     } 
+
 
     ~GroupKeyIndex(){ 
     }
@@ -78,6 +72,24 @@ public:
 private:
     GroupKeyIndex(const GroupKeyIndex<T>&);
     GroupKeyIndex<T>& operator=(const GroupKeyIndex<T>&);
+
+    inline void generateAttributeVector( std::vector<T> &originData ){
+        uint64_t valueId;
+        size_t rows = originData.size();
+        size_t bitsForColumn = (size_t)( log2(rows) );
+        m_AttributeVector = std::make_shared< vector_ptr_t >( rows,bitsForColumn );
+        m_AttributeVector.allocData();
+
+        //set the attribute vector
+        for(size_t i = 0; i < originData.size() ; ++i){
+            valueId = m_Dictionary->findValueIdByValue( originData[i] );
+            m_AttributeVector.set( i , valueId );
+        }
+    }
+
+    inline void generateIndexVector(){
+        
+    }
     
 private:
     int mergeProcess(){}
