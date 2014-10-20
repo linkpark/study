@@ -75,8 +75,8 @@ private:
 
     inline void generateAttributeVector( std::vector<T> &originData ){
         uint64_t valueId;
-        size_t rows = originData.size();
-        size_t bitsForColumn = (size_t)( log2(rows) );
+        m_Rows = originData.size();
+        m_BitsForColumn = (size_t)( log2(rows) );
         m_AttributeVector = std::make_shared< vector_ptr_t >( rows,bitsForColumn );
         m_AttributeVector.allocData();
 
@@ -88,7 +88,39 @@ private:
     }
 
     inline void generateIndexVector(){
+        size_t dicSize = m_Dictionary->getSize();
+        std::vector< long long > valueCount( dicSize, 0 );
         
+        for(size_t i = 0; i < m_Rows ; i++){
+            valueCount[ m_AttributeVector->get(i) ]++;
+        }
+
+        m_IndexVector = std::make_shared< vector_ptr_t >( dicSize, m_BitsForColumn );
+        m_IndexVector->set( 0 , 0 );
+
+        for(size_t i = 0; i < dicSize ; i++){
+            m_IndexVector->set(i+1, (m_IndexVector->get(i) + valueCount[i]) );
+        }
+    }
+
+    inline void generatePositionVector(){
+        std::vector< long long > positionVectorTemp( m_Rows , -1 );
+        size_t offset;
+
+        for(size_t i = 0 ;i < m_Rows; ++i ){
+            offset = m_IndexVector->get( m_AttributeVector->get(i) );  
+            while( positionVectorTemp[ offset ] != -1 ){
+                offset++;
+            }
+
+            positionVectorTemp[ offset ] = i;
+        }
+
+        m_PositionVector = std::make_shared< vector_ptr_t >( m_Rows, m_BitsForColumn );
+        
+        for(int i = 0; i < m_Rows; ++i){
+            m_PositionVector->set( i , positionVectorTemp[i] );
+        }
     }
     
 private:
@@ -100,6 +132,8 @@ private:
     vector_ptr_t m_PositionVector;
     vector_ptr_t m_AttributeVector;
     dic_ptr_t m_Dictionary;
+    size_t m_Rows;
+    size_t m_BitsForColumn;
 
     DeltaData m_CDeltaData;
 };
