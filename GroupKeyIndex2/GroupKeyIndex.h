@@ -41,7 +41,7 @@ public:
     vector<uint64_t> searchByKey( T &key );
     vector<uint64_t> searchByKeyRange( T &start, T &end );
     
-    batchImport( vector<T> &dataList );
+    void batchImport( vector<T> &dataList );
 
     T searchByRowId( uint64_t rowId );
 
