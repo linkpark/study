@@ -1,5 +1,6 @@
 #ifndef PROCESS_H_
 #define PROCESS_H_
+#include <sys/types.h>
 #include "Executive.h"
 #include "ExecutiveFunctionProvider.h"
 
@@ -8,13 +9,14 @@ public:
     explicit Process(ExecutiveFunctionProvider *pFunctionProvider);
     virtual ~Process();
     
-    virtual run(void *pstrCmdLine) = 0;
-    virtual waitForDeath();
+    virtual int run(void *pstrCmdLine) = 0;
+    virtual int waitForDeath();
 
 private:
     Process(const Process& );
     const Process& operator=(Process&);
 
+private:
     pid_t m_ProcessId;
 
     bool m_bProcessCreated;
