@@ -9,7 +9,7 @@ public:
     explicit Process(ExecutiveFunctionProvider *pFunctionProvider);
     virtual ~Process();
     
-    virtual int run(void *pstrCmdLine) = 0;
+    virtual int run(void *pStrCmdLine) = 0;
     virtual int waitForDeath();
 
 private:

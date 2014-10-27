@@ -1,6 +1,7 @@
 #ifndef TCPLISTENAGENT_H_
 #define TCPLISTENAGENT_H_
 #include "Agent.h"
+#include "SocketAddress.h"
 
 class TCPListenAgent:public Agent{
 public:
@@ -8,11 +9,15 @@ public:
     ~TCPListenAgent();
 
 public:
-
+    int readData( void );
+    int writeData( void );
+    int initial( void );
 
 private:
-    Socket 
-    
+    inline void initial( void ); 
+
+private:
+    SocketAddress m_SocketAddress; 
 };
 
 #endif
