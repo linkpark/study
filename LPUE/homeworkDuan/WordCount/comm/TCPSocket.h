@@ -17,7 +17,9 @@
 #ifndef TCPSOCKET_H_
 #define TCPSOCKET_H_
 #include <sys/types.h>
+#include "SocketAddress.h"
 
+class SocketAddress;
 class TCPSocket{
 public:
     TCPSocket();
@@ -25,11 +27,16 @@ public:
     ~TCPSocket();   
 
 public:
-    int generateSocket( int socketFd );
+    int generateSocket( void );
     int getFd()const;
     int close( void );
     int read( void* buf,size_t n);
+    int write( void* buf, size_t n);
+    int listen( int backlog );
+    int bind( SocketAddress& );
+    int connect( SocketAddress& );
 
+    int setNonBlock(); 
 
 private:
     int m_iSocketFd;
