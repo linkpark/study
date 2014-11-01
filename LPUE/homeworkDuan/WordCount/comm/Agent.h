@@ -26,7 +26,7 @@ protected:
     Task *m_pTask;    
 
 public:
-    Agent():m_iFd(-1){}
+    Agent():m_iFd(-1),m_pTask(NULL){}
     Agent(Task *pTask):m_iFd(-1),m_pTask(pTask){}
     virtual ~Agent(){}
 

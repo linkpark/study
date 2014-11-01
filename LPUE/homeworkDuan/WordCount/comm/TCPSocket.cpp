@@ -17,8 +17,10 @@
 #include "TCPSocket.h"
 #include "Error.h"
 #include <sys/socket.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <string.h>
 
 #include <iostream>
 
@@ -98,6 +100,21 @@ int TCPSocket::connect( SocketAddress &sockAddr ){
     
     ret = ::connect( m_iSocketFd , (struct sockaddr*)&addr , sizeof(addr) );
     return ret;
+}
+
+int TCPSocket::accept( SocketAddress &sockAddr ){
+    struct sockaddr_in addr;
+    socklen_t clientAddrLen = sizeof( sockAddr );
+    
+    memset(&addr, 0 , sizeof(struct sockaddr_in) );
+
+    int fd = ::accept(m_iSocketFd, (struct sockaddr*)&addr, &clientAddrLen);
+    if( fd < 0 ){
+        std::cerr << "In TCPSocket::accept error!" << std::endl;
+        return FAILED;
+    }
+
+    return fd;
 }
 
 int TCPSocket::setNonBlock(){

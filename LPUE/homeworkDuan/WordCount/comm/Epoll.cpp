@@ -38,6 +38,7 @@
 #include <cstring>
 
 using namespace std;
+const int EPOLL_TIME_OUT_LEN = -1;
 
 Epoll::Epoll():m_iEpollFd(-1),m_pEpollEvents(NULL){ 
     m_iEventSize = 0;
@@ -68,7 +69,7 @@ int Epoll::initialize(int eventsNumber){
     return SUCCESSFUL; 
 }
 
-int Epoll::doEvent( Agent* pAgentPtr, int fd , int op, uint32_t event){
+int Epoll::doEvent( Agent* pAgentPtr, int op , int fd, uint32_t event){
     struct epoll_event ev;
     memset( &ev,0,sizeof(ev) );
    

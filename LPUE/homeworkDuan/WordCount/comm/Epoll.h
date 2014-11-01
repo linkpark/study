@@ -2,7 +2,6 @@
 #define EPOLL_H_
 #include "Agent.h"
 //using single pattern
-const int EPOLL_TIME_OUT_LEN = -1;
 class Epoll{
 private:
     Epoll();
@@ -14,7 +13,7 @@ private:
 public:   
     int getEpollFd()const;
     int initialize( int );
-    int doEvent( Agent* pAgentPtr, int fd, int op, unsigned int event); 
+    int doEvent( Agent* pAgentPtr, int op, int fd, unsigned int event); 
     void run( void );
 
 public:

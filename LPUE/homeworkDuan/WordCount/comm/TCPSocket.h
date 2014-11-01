@@ -35,6 +35,7 @@ public:
     int listen( int backlog );
     int bind( SocketAddress& );
     int connect( SocketAddress& );
+    int accept( SocketAddress& );
 
     int setNonBlock(); 
 
