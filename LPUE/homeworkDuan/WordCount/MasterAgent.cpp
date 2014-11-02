@@ -79,7 +79,8 @@ int MasterAgent::scanTheDir(const char* path){
     return SUCCESSFUL;
 }
 
-inline int initialSocket(){
-
+int MasterAgent::initialSocket(){
+    
+    return SUCCESSFUL;
 }
 
