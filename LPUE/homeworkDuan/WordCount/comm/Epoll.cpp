@@ -14,31 +14,19 @@
  * 
  * ==================================================================
  */
-/*
- * =================================================================
- *
- *            Filename:    Epoll.cpp
- *
- *         Description:    
- *
- *             Version:    
- *             Created:    2014-10-24 13:26
- *           Reversion:    none
- *            Compiler:    g++
- *            
- *              Author:    wangjin, 836792834@qq.com
- * 
- * ==================================================================
- */
+
 #include "Error.h"
 #include "Epoll.h"
 #include <sys/epoll.h>
 #include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <cstring>
 
 using namespace std;
 const int EPOLL_TIME_OUT_LEN = -1;
+Epoll* Epoll::m_spEpollObj = NULL;
 
 Epoll::Epoll():m_iEpollFd(-1),m_pEpollEvents(NULL){ 
     m_iEventSize = 0;
@@ -76,7 +64,7 @@ int Epoll::doEvent( Agent* pAgentPtr, int op , int fd, uint32_t event){
     ev.events = event;
     ev.data.ptr = pAgentPtr; 
 
-    if(epoll_ctl( m_iEpollFd ,op, fd, &ev)){
+    if(epoll_ctl( m_iEpollFd ,op, fd, &ev) < 0){
         cerr << "in Epoll::doEvent() epoll_ctl error!" <<endl;
         return FAILED; 
     }
@@ -111,7 +99,7 @@ void Epoll::run( void ){
         for( int i = 0; i < ndfs ; ++i ){
             pAgent = static_cast<Agent*>( m_pEpollEvents[i].data.ptr );
             if(NULL == pAgent){
-                cerr << "in Epoll::run() pAgent == NULL" <<endl;
+                perror("in Epoll::run() pAgent == NULL \n");
                 continue;
             }
 
@@ -123,7 +111,7 @@ void Epoll::run( void ){
 
             if( EPOLLIN & m_pEpollEvents[i].events ){
                 if( FAILED == pAgent->readData() ){
-                    cerr << "in Epoll::run() pAgent->readData() error!" <<endl;
+                    perror("in Epoll::run() pAgent->readData() error! \n");
                 }
             }
         }

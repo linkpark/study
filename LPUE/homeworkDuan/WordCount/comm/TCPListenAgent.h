@@ -33,10 +33,13 @@ public:
     TCPListenAgent( int port, const char* pIpAddr ){
     	m_SocketAddress.setAddress( pIpAddr, port );
     }
-    ~TCPListenAgent();
+
+    ~TCPListenAgent(){
+    
+    }
 
 public:
-    int readData( void ){
+    virtual int readData( void ){
 	    SocketAddress clientAddr;
 	    int clientFd;
 	    
@@ -58,11 +61,11 @@ public:
 	    return SUCCESSFUL;  
     }
 
-    int writeData( void ){
+    virtual int writeData( void ){
     	return SUCCESSFUL;
     }
 
-    int initial( void ){
+    virtual int initial( void ){
 	  	if( m_TCPListenSoket.generateSocket() < 0 ||
         m_TCPListenSoket.setNonBlock() < 0 ||
         m_TCPListenSoket.bind( m_SocketAddress ) < 0 ||
@@ -71,6 +74,7 @@ public:
         	return FAILED;
     	}
     
+        Epoll::getInstance()->doEvent(this, EPOLL_CTL_ADD, m_TCPListenSoket.getFd(), EPOLLIN );
     	return SUCCESSFUL;
     }
 

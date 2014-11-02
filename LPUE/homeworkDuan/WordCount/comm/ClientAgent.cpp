@@ -18,9 +18,10 @@
 #include "ClientAgent.h"
 #include "Error.h"
 #include <iostream>
-
+#include <cstring>
 
 int ClientAgent::readData( void ){
+    memset(m_pBuf, 0, 100);
     int n = m_TCPClientSocket.read( m_pBuf, 100 );
     if( n < 0){
         std::cerr << "In ClientAgent::readData error!" << std::endl;
@@ -35,15 +36,19 @@ int ClientAgent::readData( void ){
     return SUCCESSFUL;
 }
 
-int ClientAgent::sendData( void ){
+int ClientAgent::writeData( void ){
     int n = m_TCPClientSocket.write( m_pBuf, 100);
     if( n < 0){
         std::cerr << "InClientAgent::writeData error!" <<std::endl;
         return FAILED;
     }else{
-        m_pTask->writeTask( this);
+        m_pTask->writeTask( this );
     }
 
     return SUCCESSFUL;
+}
+
+int ClientAgent::getSocketFd()const{
+    return m_TCPClientSocket.getFd();
 }
 

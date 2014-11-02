@@ -32,9 +32,11 @@ public:
 
 public:
     virtual int readData( void );
-    virtual int sendData( void );
+    virtual int writeData( void );
 
     int setBuf();
+    int getSocketFd()const;
+
 private:
     TCPSocket m_TCPClientSocket;    
     char m_pBuf[100];

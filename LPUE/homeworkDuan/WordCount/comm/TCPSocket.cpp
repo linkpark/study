@@ -27,6 +27,10 @@
 TCPSocket::TCPSocket():m_iSocketFd( -1 ){
 }
 
+TCPSocket::TCPSocket(int fd):m_iSocketFd(fd){
+
+}
+
 TCPSocket::~TCPSocket(){}
 
 int TCPSocket::generateSocket( void ){
