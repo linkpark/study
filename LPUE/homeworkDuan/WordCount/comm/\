@@ -22,7 +22,7 @@
 const int IPV4LEN = 15;
 const int IPV6LEN = 39;
 const char* ANYADDR = "0";
-const char* IPV4_ANYADDR = "0.0.0.0";
+const char* IPV4_ANYADDR = "0.0.0.";
 const char* IPV6_ANYADDR = "::1";
 //const int IPV6 = 1;
 const int IPV4 = 0;
@@ -86,7 +86,8 @@ sockaddr_in SocketAddress::getAddr( void ){
     memset( &addr, 0 ,sizeof(addr) );
     addr.sin_family = AF_INET;
     addr.sin_port = htons( m_nPort );
-    addr.sin_addr.s_addr = inet_addr( m_strIp.c_str() );
+    //addr.sin_addr.s_addr = inet_addr( m_strIp.c_str() );
+    addr.sin_addr.s_addr = htonl( INADDR_ANY );
 
     return addr;
 }

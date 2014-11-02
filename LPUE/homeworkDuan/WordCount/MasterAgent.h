@@ -35,7 +35,7 @@ public:
 
 private:
     inline int scanTheDir( const char* );
-
+    inline int initialSocket();
 
 private:
     file_list_type m_FileNameList;
