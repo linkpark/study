@@ -18,6 +18,7 @@
 #define MASTERAGENT_H_
 #include "comm/Agent.h"
 #include "comm/TCPSocket.h"
+#include "comm/SocketAddress.h"
 #include <vector>
 #include <string>
 
@@ -26,7 +27,7 @@ private:
     typedef std::vector< std::string > file_list_type;
 
 public:
-    MasterAgent();
+    MasterAgent( const char* pAddr, int port );
     ~MasterAgent();
     
     int initial( const char* );
@@ -40,6 +41,7 @@ private:
 private:
     file_list_type m_FileNameList;
     TCPSocket m_MasterSocket;
+    SocketAddress m_SocketAddress;
 };
 
 #endif

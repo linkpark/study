@@ -16,17 +16,20 @@
  */
 #include "MasterAgent.h"
 #include "comm/Error.h"
+#include "comm/Epoll.h"
 #include <unistd.h>
+#include <sys/epoll.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
 #include <stdio.h>
-
 #include <iostream>
 
 using namespace std;
+const int LISTEN_NUM = 1024;
 
-MasterAgent::MasterAgent(){
+MasterAgent::MasterAgent( const char* pAddr , int port){
+    m_SocketAddress.setAddress( pAddr, port );
 }
 
 MasterAgent::~MasterAgent(){
@@ -35,6 +38,11 @@ MasterAgent::~MasterAgent(){
 
 int MasterAgent::initial(const char* path){
     if( FAILED == scanTheDir( path )){
+        perror("In MasterAgent::initial error!\n");
+        return FAILED;
+    }
+
+    if( FAILED == initialSocket()){
         perror("In MasterAgent::initial error!\n");
         return FAILED;
     }
@@ -80,7 +88,15 @@ int MasterAgent::scanTheDir(const char* path){
 }
 
 int MasterAgent::initialSocket(){
+	if( m_MasterSocket.generateSocket() < 0 ||
+        m_MasterSocket.setNonBlock() < 0 ||
+        m_MasterSocket.bind( m_SocketAddress ) < 0 ||
+        m_MasterSocket.listen( LISTEN_NUM ) <0){
+            perror("In TCPListenAgent::initial error!\n");
+        	return FAILED;
+    }
     
+    Epoll::getInstance()->doEvent(this, EPOLL_CTL_ADD, m_MasterSocket.getFd(), EPOLLIN );
     return SUCCESSFUL;
 }
 
