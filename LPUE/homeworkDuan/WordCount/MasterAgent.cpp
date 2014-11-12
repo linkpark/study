@@ -17,6 +17,8 @@
 #include "MasterAgent.h"
 #include "comm/Error.h"
 #include "comm/Epoll.h"
+#include "SlaveAgent.h"
+
 #include <unistd.h>
 #include <sys/epoll.h>
 #include <sys/types.h>
@@ -27,13 +29,16 @@
 
 using namespace std;
 const int LISTEN_NUM = 1024;
+class SlaveAgent;
 
 MasterAgent::MasterAgent( const char* pAddr , int port){
     m_SocketAddress.setAddress( pAddr, port );
+    m_WordCountMap = new std::map< std::string, int >;    
+    m_CurrentFileSeq = 0;
 }
 
 MasterAgent::~MasterAgent(){
-
+    delete m_WordCountMap;
 }
 
 int MasterAgent::initial(const char* path){
@@ -51,6 +56,23 @@ int MasterAgent::initial(const char* path){
 }
 
 int MasterAgent::readData(){
+    SocketAddress clientAddr;
+	int clientFd;
+	    
+	clientFd = m_MasterSocket.accept( clientAddr );
+	if( clientFd < 0 ){
+        std::cerr << "In TCPListenAgent::readData error " <<std::endl;
+        return FAILED;
+    }  
+
+    TCPSocket clientSocket( clientFd );
+    SlaveAgent *pSlaveAgent = new SlaveAgent(clientSocket, m_FileNameList[m_CurrentFileSeq], m_WordCountMap );
+    m_CurrentFileSeq ++;
+
+    if( Epoll::getInstance()->doEvent(pSlaveAgent, EPOLL_CTL_ADD , clientFd , EPOLLIN ) < 0 ){
+        std::cerr << "In TCPListenAgent::readData doEvent error! " << std::endl;
+        return FAILED;
+    }
 
     return SUCCESSFUL;
 }

@@ -21,11 +21,12 @@
 #include "comm/SocketAddress.h"
 #include <vector>
 #include <string>
+#include <map>
 
 class MasterAgent:public Agent{
 private:
     typedef std::vector< std::string > file_list_type;
-
+    
 public:
     MasterAgent( const char* pAddr, int port );
     ~MasterAgent();
@@ -40,8 +41,12 @@ private:
 
 private:
     file_list_type m_FileNameList;
+    int m_CurrentFileSeq;
+
     TCPSocket m_MasterSocket;
     SocketAddress m_SocketAddress;
+    std::map< std::string, int > *m_WordCountMap;
+    
 };
 
 #endif
