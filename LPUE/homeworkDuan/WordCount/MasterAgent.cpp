@@ -42,12 +42,12 @@ MasterAgent::~MasterAgent(){
 }
 
 int MasterAgent::initial(const char* path){
-    if( FAILED == scanTheDir( path )){
+    if( FAILED == initialSocket()){
         perror("In MasterAgent::initial error!\n");
         return FAILED;
     }
-
-    if( FAILED == initialSocket()){
+    
+    if( FAILED == scanTheDir( path )){
         perror("In MasterAgent::initial error!\n");
         return FAILED;
     }
@@ -69,7 +69,7 @@ int MasterAgent::readData(){
     SlaveAgent *pSlaveAgent = new SlaveAgent(clientSocket, m_FileNameList[m_CurrentFileSeq], m_WordCountMap );
     m_CurrentFileSeq ++;
 
-    if( Epoll::getInstance()->doEvent(pSlaveAgent, EPOLL_CTL_ADD , clientFd , EPOLLIN ) < 0 ){
+    if( Epoll::getInstance()->doEvent(pSlaveAgent, EPOLL_CTL_ADD , clientFd , EPOLLOUT ) < 0 ){
         std::cerr << "In TCPListenAgent::readData doEvent error! " << std::endl;
         return FAILED;
     }
@@ -78,7 +78,6 @@ int MasterAgent::readData(){
 }
 
 int MasterAgent::writeData(){
-
     return SUCCESSFUL;
 }
 
