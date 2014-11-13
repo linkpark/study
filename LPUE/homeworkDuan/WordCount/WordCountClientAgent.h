@@ -22,6 +22,11 @@
 #include <map>
 #include <string>
 
+struct WordPair{
+    int count;
+    char word[256];
+};
+
 class WordCountClientAgent:public Agent{
 public:
     WordCountClientAgent( const char* pIpAddr, int port );
@@ -31,6 +36,9 @@ public:
     int initial( void );
     int readData( void );
     int writeData( void );
+
+private:
+    inline int scanFile( void );
 
 private:
     TCPSocket m_ClientSocket;

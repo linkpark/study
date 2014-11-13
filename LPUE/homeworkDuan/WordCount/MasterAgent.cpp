@@ -100,8 +100,11 @@ int MasterAgent::scanTheDir(const char* path){
         }
 
         if( !S_ISDIR(statBuf.st_mode) ){
-            string path( entry->d_name );
-            m_FileNameList.push_back( path );
+            string fileName( path );
+            fileName.append("/");
+            fileName.append( entry->d_name );
+            
+            m_FileNameList.push_back( fileName );
         }    
     }
     

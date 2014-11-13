@@ -4,6 +4,7 @@
 #include <sys/epoll.h>
 #include <string.h>
 #include <stdio.h>
+#include <iostream>
 
 SlaveAgent::SlaveAgent(TCPSocket &clientSocket, std::string &fileName, std::map< std::string , int > *pMap):
     m_TcpSocket(clientSocket),m_FileName(fileName),m_pWordCountBuffer(pMap) {
@@ -28,8 +29,9 @@ int SlaveAgent::readData(){
     }else if( n > 0 ){
         std::string word;
         word = wordPair.word;
-
         (*m_pWordCountBuffer)[ word ] += wordPair.count;
+
+        std::cout << word << " " << (*m_pWordCountBuffer)[ word ] <<std::endl; 
     }
 
     return SUCCESSFUL;
