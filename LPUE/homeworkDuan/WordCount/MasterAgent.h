@@ -46,7 +46,7 @@ private:
     TCPSocket m_MasterSocket;
     SocketAddress m_SocketAddress;
     std::map< std::string, int > *m_WordCountMap;
-    
+    int *m_pJobCount;    
 };
 
 #endif

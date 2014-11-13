@@ -5,6 +5,7 @@
 #include <sys/epoll.h>
 #include <string.h>
 #include <fstream>
+#include <iostream>
 
 WordCountClientAgent::WordCountClientAgent( const char *pIpAddr, int port){
     m_ServerSockAddress.setAddress( pIpAddr, port );
@@ -20,8 +21,6 @@ int WordCountClientAgent::initial( void ){
         perror("In WordCountClientAgent::initial() error!\n");
         return FAILED;
     }
-
-    m_ClientSocket.setNonBlock();
 
     if( (Epoll::getInstance()->doEvent(this, EPOLL_CTL_ADD, m_ClientSocket.getFd() , EPOLLIN) ) < 0 ){
         perror("In WordCountClientAgent::initial() error!\n");
@@ -42,6 +41,7 @@ int WordCountClientAgent::readData( void ){
         m_ClientSocket.close();
         delete this;
     }else{
+        std::cout << "begin scan " << m_pFileName << std::endl;
         scanFile(); 
 
         if( (Epoll::getInstance()->doEvent( this,EPOLL_CTL_MOD,m_ClientSocket.getFd(),EPOLLOUT )) < 0){

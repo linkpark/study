@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <iostream>
 
-SlaveAgent::SlaveAgent(TCPSocket &clientSocket, std::string &fileName, std::map< std::string , int > *pMap):
-    m_TcpSocket(clientSocket),m_FileName(fileName),m_pWordCountBuffer(pMap) {
+SlaveAgent::SlaveAgent(TCPSocket &clientSocket, std::string &fileName, std::map< std::string , int > *pMap , int *pJobCount):
+    m_TcpSocket(clientSocket),m_FileName(fileName),m_pWordCountBuffer(pMap),m_pJobCount(pJobCount) {
 
 }
 
@@ -24,14 +24,20 @@ int SlaveAgent::readData(){
        perror("In SlaveAgent::readData() read error!\n");
        return FAILED;
     }else if(n == 0){
+        *(m_pJobCount) -= 1;
+        if( *m_pJobCount == 0){
+            Epoll::getInstance()->setEndTime();
+            printWordMap();     
+
+            std::cout << "spend time:" << Epoll::getInstance()->getSpendTime() <<"us"<<std::endl;
+        }
+
         m_TcpSocket.close();
         delete this;
     }else if( n > 0 ){
         std::string word;
         word = wordPair.word;
         (*m_pWordCountBuffer)[ word ] += wordPair.count;
-
-        std::cout << word << " " << (*m_pWordCountBuffer)[ word ] <<std::endl; 
     }
 
     return SUCCESSFUL;
@@ -50,4 +56,11 @@ int SlaveAgent::writeData(){
     }
     
     return SUCCESSFUL;
+}
+
+void SlaveAgent::printWordMap(){
+    std::map<std::string, int >::iterator mapIt;
+    for(mapIt = m_pWordCountBuffer->begin(); mapIt != m_pWordCountBuffer->end(); ++mapIt){
+        std::cout << mapIt->first << " " << mapIt->second << std::endl;
+    }
 }

@@ -118,3 +118,14 @@ void Epoll::run( void ){
     }
 }
 
+void Epoll::setBeginTime(){
+    gettimeofday(&m_BeginTime,NULL); 
+}
+
+void Epoll::setEndTime(){
+    gettimeofday(&m_EndTime,NULL);
+}
+
+int Epoll::getSpendTime(){
+    return 1000000*(m_EndTime.tv_sec - m_BeginTime.tv_sec ) + (m_EndTime.tv_usec - m_BeginTime.tv_usec);
+}

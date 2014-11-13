@@ -6,6 +6,7 @@ using namespace std;
 
 int main(){
     Epoll::getInstance()->initialize( 256 );
+    Epoll::getInstance()->setBeginTime();
     MasterAgent masterAgent( "0",54321 );    
     masterAgent.initial("word");
 

@@ -82,7 +82,7 @@ int MasterAgent::readData(){
     }  
 
     TCPSocket clientSocket( clientFd );
-    SlaveAgent *pSlaveAgent = new SlaveAgent(clientSocket, m_FileNameList[m_CurrentFileSeq], m_WordCountMap );
+    SlaveAgent *pSlaveAgent = new SlaveAgent(clientSocket, m_FileNameList[m_CurrentFileSeq], m_WordCountMap , m_pJobCount );
     m_CurrentFileSeq ++;
 
     if( Epoll::getInstance()->doEvent(pSlaveAgent, EPOLL_CTL_ADD , clientFd , EPOLLOUT ) < 0 ){
@@ -101,6 +101,8 @@ int MasterAgent::scanTheDir(const char* path){
     DIR *dirHandler = opendir( path );
     struct dirent *entry;
     struct stat statBuf;
+    
+    m_pJobCount = new int;   
 
     if( NULL == dirHandler ){
         perror( "in MasterAgent::initial() opendir() error!\n" );
@@ -125,6 +127,7 @@ int MasterAgent::scanTheDir(const char* path){
     }
     
     chdir( "../" );
+    *m_pJobCount = m_FileNameList.size();
 
     return SUCCESSFUL;
 }

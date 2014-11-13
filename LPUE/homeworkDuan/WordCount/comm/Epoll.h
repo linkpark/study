@@ -1,6 +1,7 @@
 #ifndef EPOLL_H_
 #define EPOLL_H_
 #include "Agent.h"
+#include <sys/time.h>
 //using single pattern
 class Epoll{
 private:
@@ -15,6 +16,10 @@ public:
     int initialize( int );
     int doEvent( Agent* pAgentPtr, int op, int fd, unsigned int event); 
     void run( void );
+    
+    void setBeginTime( void );
+    void setEndTime( void );
+    int getSpendTime( void );
 
 public:
     static Epoll* getInstance();
@@ -28,6 +33,8 @@ private:
     struct epoll_event *m_pEpollEvents;
 
     static Epoll* m_spEpollObj;
+    struct timeval m_BeginTime;
+    struct timeval m_EndTime;
 };
 
 #endif
