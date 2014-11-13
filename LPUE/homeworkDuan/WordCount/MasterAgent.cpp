@@ -25,6 +25,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 
 using namespace std;
@@ -42,6 +43,8 @@ MasterAgent::~MasterAgent(){
 }
 
 int MasterAgent::initial(const char* path){
+    pid_t childProcessId;
+
     if( FAILED == initialSocket()){
         perror("In MasterAgent::initial error!\n");
         return FAILED;
@@ -50,6 +53,19 @@ int MasterAgent::initial(const char* path){
     if( FAILED == scanTheDir( path )){
         perror("In MasterAgent::initial error!\n");
         return FAILED;
+    }
+
+    for(size_t i = 0 ; i < m_FileNameList.size(); i++ ){
+        childProcessId = vfork();
+        if( childProcessId == 0){
+            if( execl("./WordCountMain","WordCountMain",NULL) < 0){
+                perror("execl error!\n");
+                return FAILED;
+            }
+        }else if( childProcessId < 0 ){
+            perror("fork error!\n");
+            return FAILED;
+        }
     }
 
     return SUCCESSFUL;
@@ -108,6 +124,8 @@ int MasterAgent::scanTheDir(const char* path){
         }    
     }
     
+    chdir( "../" );
+
     return SUCCESSFUL;
 }
 
