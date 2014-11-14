@@ -31,14 +31,37 @@ int ThreadPool::initial( int threadNumber ){
 
     for( i = 0 ; i < threadNumber ; i++){
         pWorkThread = new WorkThread();
-        pWorkThread->initial( i );
+        if( pWorkThread->initial( i ) < 0 ){
+            perror("In ThreadPool::initial() pWorkThread->initial error!\n");
+            return FAILED;
+        }
+
+        pWorkThread->run( NULL );
+        m_ThreadList[ pWorkThread ] = true;
     }
-
-
+    
     return SUCCESSFUL;
 }
 
-std::vector< int > applyForThreads( int threadNumber){
+std::vector< int > ThreadPool::applyForThreads( int threadNumber){
+    if( threadNumber > m_FreeThreadNumber )
+        throw "Don't have enough free list\n";
 
+    int count = 0 ;
+    std::vector< int > writeFdList;
+    std::map< WorkThread*, bool >::iterator mapIt;
+
+    for( mapIt = m_ThreadList.begin() ; mapIt != m_ThreadList.end() ; ++mapIt){
+        if(mapIt->second){
+            writeFdList.push_back( mapIt->first->getChannelWriteFd() );
+            mapIt->second = false;
+            count ++;
+        }
+
+        if( count == threadNumber )
+            break;
+    }        
+
+    return writeFdList;
 }
 
