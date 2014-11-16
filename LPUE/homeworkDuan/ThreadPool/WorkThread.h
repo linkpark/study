@@ -18,6 +18,7 @@
 #define WORKTHREAD_H_
 #include "Thread.h"
 #include "Channel.h"
+#include "ThreadWorkItem.h"
 
 class ThreadWorkItem;
 class WorkThread : public Thread{
@@ -26,11 +27,8 @@ public:
     ~WorkThread();
 
     int runThreadFunction( void ); 
-    int initial( int fd );
+    int initial( int );
     int getChannelWriteFd();
-
-private:
-    inline void setWriteBackFd( int fd);
 
 private:
     Channel *m_WorkThreadChannel;

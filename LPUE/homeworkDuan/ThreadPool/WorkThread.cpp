@@ -34,15 +34,22 @@ int WorkThread::runThreadFunction(){
     int readFd = m_WorkThreadChannel->getReadFd();
 
     while( (n = read( readFd, &m_pThreadWorkItem , sizeof( m_pThreadWorkItem )) ) > 0){
+        m_pThreadWorkItem->beforeProcess();
+        m_pThreadWorkItem->process();
+        m_pThreadWorkItem->postProcess();
+    }
 
+    if( n < 0 ){
+        perror("in WorkThread::runThreadFunction() read error!\n");
+        return FAILED;
     }
 
     return SUCCESSFUL;
 }
 
-int WorkThread::initial( int fd ){
+int WorkThread::initial( int fifoNumber ){
     char pathName[20];
-    sprintf(pathName, "%ld.fifo", m_ThreadID);
+    sprintf(pathName, "%d.fifo", fifoNumber);
 
     m_WorkThreadChannel = new FIFOChannel(pathName);
     
@@ -50,9 +57,7 @@ int WorkThread::initial( int fd ){
         perror("In WorkThread::initial() m_WorkThreadChannel initial() error!\n");
         return FAILED;
     }
-
-    setWriteBackFd( fd );
-    
+     
     return SUCCESSFUL;
 }
 
@@ -65,7 +70,4 @@ int WorkThread::getChannelWriteFd(){
     return m_WorkThreadChannel->getWriteFd();
 }
 
-void WorkThread::setWriteBackFd( int fd ){
-    m_WriteBackFd = fd;
-}
 

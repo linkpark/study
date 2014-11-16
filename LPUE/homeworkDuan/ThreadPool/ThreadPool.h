@@ -31,7 +31,8 @@ public:
 
 private:
     std::map< WorkThread*, bool > m_ThreadList;
-    int m_ThreadNumber;
+    int m_TotalThreadNumber;
+    int m_FreeThreadNumber;
 };
 
 #endif
