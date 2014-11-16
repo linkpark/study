@@ -41,18 +41,12 @@ public:
     int postProcess();
 
 private:
-    inline void addOperation();
-    inline void subOperation();
-    inline void mutiplyOperation();
-    inline void divisionOperation();
-
-private:
     int m_WriteBackFd;
-    int m_OperationType;
     int m_OpOne;
     int m_OpTwo;
     int m_OpType;
     int m_Result;
+    int m_State;
 };
 
 #endif
