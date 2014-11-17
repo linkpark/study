@@ -31,6 +31,8 @@ public:
     int initial( int threadNumber );
     int sendTask( ThreadWorkItem* );
     int reciveTask();
+    
+    int getWriteBackFd();
 
 private:
     ThreadPool *m_pThreadPool;

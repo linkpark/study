@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <stdio.h>
 
 #define FILE_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
 
@@ -22,7 +23,7 @@ int FIFOChannel::getReadFd(){
     }
 
     if( m_ReadFd == -1){
-        m_ReadFd = open( m_FIFOName.c_str(), O_RDONLY, 0 );
+        m_ReadFd = open( m_FIFOName.c_str(), O_RDWR, 0 );
     }
 
     return m_ReadFd;
@@ -35,7 +36,7 @@ int FIFOChannel::getWriteFd(){
     }
 
     if( m_WriteFd == -1){
-        m_WriteFd = open( m_FIFOName.c_str(), O_WRONLY , 0 );
+        m_WriteFd = open( m_FIFOName.c_str(), O_RDWR , 0 );
     }
 
     return m_WriteFd;

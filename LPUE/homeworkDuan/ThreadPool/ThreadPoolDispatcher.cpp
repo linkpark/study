@@ -20,12 +20,17 @@
 #include "ArithmeticWorkItem.h"
 #include <unistd.h>
 #include <iostream>
+#include <stdio.h>
 
-ThreadPoolDispatcher::ThreadPoolDispatcher( ThreadPool *pThreadPool, const char *pChannelName ):m_pThreadPool(pThreadPool),m_pChannel(NULL){ 
+ThreadPoolDispatcher::ThreadPoolDispatcher( ThreadPool *pThreadPool, 
+        const char *pChannelName ):m_pThreadPool(pThreadPool),m_pChannel(NULL){ 
     m_ThreadNumber = 0;
     m_Cursor = 0;
 
     m_pChannel = new FIFOChannel( pChannelName);
+    if( m_pChannel->initial() < 0){
+        throw "In ThreadPoolDispatcher::initial FIFO error!\n";
+    }
 }
 
 ThreadPoolDispatcher::~ThreadPoolDispatcher(){
@@ -39,6 +44,7 @@ int ThreadPoolDispatcher::initial( int threadNumber){
     }
     
     m_ThreadWriteFdList = m_pThreadPool->applyForThreads( threadNumber );    
+    m_ThreadNumber = threadNumber;
 
     return SUCCESSFUL;
 }
@@ -47,7 +53,7 @@ int ThreadPoolDispatcher::sendTask( ThreadWorkItem *pWorkItem ){
     int writeFd = m_ThreadWriteFdList[ m_Cursor ];
     int r;
 
-    if( (r = write(writeFd, &pWorkItem , sizeof(*pWorkItem)) ) < 0 ){
+    if( (r = write(writeFd, &pWorkItem , sizeof(pWorkItem)) ) < 0 ){
         perror("In ThreadPoolDispatcher::sendTask() write error!\n");
         return FAILED; 
     }
@@ -76,5 +82,9 @@ int ThreadPoolDispatcher::reciveTask(){
     }
 
     return SUCCESSFUL;
+}
+
+int ThreadPoolDispatcher::getWriteBackFd(){
+    return m_pChannel->getWriteFd();
 }
 

@@ -16,6 +16,7 @@
  */
 #include "ThreadPool.h"
 #include "Error.h"
+#include <stdio.h>
 
 ThreadPool::ThreadPool():m_TotalThreadNumber(0),m_FreeThreadNumber(0){
 }
