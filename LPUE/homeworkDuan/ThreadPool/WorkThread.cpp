@@ -39,6 +39,9 @@ int WorkThread::runThreadFunction(){
         m_pThreadWorkItem->postProcess();
     }
 
+    delete m_pThreadWorkItem;
+    m_pThreadWorkItem = NULL;
+
     if( n < 0 ){
         perror("in WorkThread::runThreadFunction() read error!\n");
         return FAILED;

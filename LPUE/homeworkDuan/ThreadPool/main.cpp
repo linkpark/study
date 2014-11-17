@@ -17,7 +17,7 @@ int main(){
     ThreadPoolDispatcher dispatcher(threadPool, "dispatcher.fifo" );
     dispatcher.initial( 5 );
 
-    for(int i = 0 ; i < 100 ; i++){
+    for(int i = 0 ; i < 1000 ; i++){
         pThreadWorkItem = new ArithmeticWorkItem( dispatcher.getWriteBackFd(), i , i , ADD );
         pThreadWorkItem->setTaskID( i );
         cout << pThreadWorkItem <<endl;
