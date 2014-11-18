@@ -30,7 +30,7 @@ public:
 
     int initial( int threadNumber );
     int sendTask( ThreadWorkItem* );
-    int reciveTask();
+    int reciveTask( int taskNumber );
     
     int getWriteBackFd();
 

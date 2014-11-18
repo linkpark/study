@@ -63,10 +63,11 @@ int ThreadPoolDispatcher::sendTask( ThreadWorkItem *pWorkItem ){
     return SUCCESSFUL;
 }
 
-int ThreadPoolDispatcher::reciveTask(){
+int ThreadPoolDispatcher::reciveTask( int workNumber ){
     struct ResultStruct result;
     int readFd = m_pChannel -> getReadFd();
     int r;
+    int taskExcutedNu = 0;
 
     do{
         r = read( readFd , &result , sizeof( result ));
@@ -74,6 +75,12 @@ int ThreadPoolDispatcher::reciveTask(){
             std::cout << "WorkNumber:" << result.workId << " result:" <<result.result <<std::endl; 
         else
            std::cout << "Operator error!" << std::endl;
+        
+        taskExcutedNu ++;
+
+        if(taskExcutedNu == workNumber )
+            return SUCCESSFUL;
+
     }while( r > 0 );
 
     if( r < 0 ){
