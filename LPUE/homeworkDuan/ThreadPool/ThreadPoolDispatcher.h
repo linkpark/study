@@ -20,6 +20,7 @@
 #include "ThreadWorkItem.h"
 #include "Channel.h"
 #include <vector>
+#include <list>
 
 class ThreadPool;
 class ThreadWorkItem;
@@ -38,6 +39,8 @@ private:
     ThreadPool *m_pThreadPool;
     Channel *m_pChannel;
     std::vector< int > m_ThreadWriteFdList;
+    std::list< ThreadWorkItem *> m_WorkItemList;
+
     int m_ThreadNumber;
     int m_Cursor;
 };
