@@ -53,9 +53,9 @@ generateDic(const char* path, vector<string> &oldDic){
 vector< int >
 generateIndexVector(vector<int> &attributeVector){
     vector<int> indexVector(dic.size() + 1); 
-    int *valueCount = new int(dic.size());
 
-    memset(valueCount,0,dic.size() * sizeof(int));
+    int valueCount[10000] ;
+    memset(valueCount,0,10000 * sizeof(int));
 
     for(vector<int>::iterator ix = attributeVector.begin(); 
             ix !=attributeVector.end();ix++ ){
@@ -67,6 +67,7 @@ generateIndexVector(vector<int> &attributeVector){
     for(unsigned long i = 0; i < dic.size() ;i++){
         indexVector[i+1] = indexVector[i] + valueCount[i];
     }
+
 
     return indexVector;
 }
@@ -97,15 +98,12 @@ void printDic(){
     }
 }
 
-vector< string > generateDeltaData(const char *path){
+void generateDeltaData(const char *path, vector<string> &DeltaData){
     ifstream inputFile(path);
     string word;
-    vector<string> DeltaData;
     while(inputFile >> word){
         DeltaData.push_back(word);
     }   
-
-    return DeltaData;
 }
 
 void merge(
@@ -216,20 +214,21 @@ main(int argc,char **argv){
 
     n = generateDic( argv[1],oldDic );
     printVector(oldDic);
+
     attributeVector = generateAttributeVector( argv[1],n );
     indexVector = generateIndexVector( attributeVector );
     positionVector = generatePositionVector( attributeVector,indexVector );
-    deltaData = generateDeltaData( argv[2] );
+    generateDeltaData( argv[2],deltaData );
     
-    /*cout << "old attribute vector table" <<endl;
-    printVector(attributeVector);
+   // cout << "old attribute vector table" <<endl;
+   // printVector(attributeVector);
 
     cout << "old index vector table "<<endl;
-    printVector(indexVector);
+   printVector(indexVector);
     
-    cout << "old position Vector" <<endl;
-    printVector(positionVector);
-    printVector(deltaData);*/
+    //cout << "old position Vector" <<endl;
+    //printVector(positionVector);
+    //printVector(deltaData);
 
     struct timeval begin,end;
 
