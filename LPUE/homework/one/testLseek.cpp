@@ -1,3 +1,19 @@
+/*
+ * =================================================================
+ *
+ *            Filename:    testLseek.cpp
+ *
+ *         Description:    
+ *
+ *             Version:    
+ *             Created:    2015-01-16 17:46
+ *           Reversion:    none
+ *            Compiler:    g++
+ *            
+ *              Author:    wangjin, 836792834@qq.com
+ * 
+ * ==================================================================
+ */
 #include <iostream>
 
 #include <fcntl.h>
@@ -45,7 +61,7 @@ int main(int argc,char **argv){
         cout << "read error!" <<endl;
         return FAILED;
     }
-    
+
     memset(buf,0,100);
 
     setFileOffset(fileFd,0);

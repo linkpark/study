@@ -25,9 +25,9 @@ int main(int argc,char **argv){
         value++;
     }
 
-    /*for(size_t i = 0; i < numberOfRows ; i ++){
+    for(size_t i = 0; i < numberOfRows ; i ++){
         cout << bitCompressedVector.get(i,0) <<endl;
-    }*/
+    }
     int originSize = sizeof(int) * numberOfRows;
     int compressedSize = bitCompressedVector.getSize();
     
