@@ -1,52 +1,73 @@
 #include <iostream>
 #include <stdio.h>
+#include <algorithm>
 
 using namespace std;
 
 //计算一个二进制数中1的个数
-int caculateNumberOfOne( unsigned short number ) {
+int caculateNumberOfOne( int number , int bitWidth ) {
     int count = 0;
-
-    while( number ) {
-        if( number & 0x0001 ) 
-            ++count;
-        
-        number = number >> 1;
-    }
+    
+    for( int i = 0; i < bitWidth; ++i ) {
+        if( number & ( 1ull << i ) ){
+            count ++;
+        } 
+    }     
 
     return count;
 }
 
-void addOneInTheEnd ( unsigned short &number ) {
-    number = number << 1;
-    number = number | 0x0001;    
-}
-
-void addZeroInTheEnd ( unsigned short &number ) {
-    number = number << 1;
-}
-
 int main(){
-    int n,q;
-    unsigned short m;
+    int n,q,m;
 
-    int w[1002];
-    int best[1002][2049];
-
-    cin >> n;
-    cin >> m;
-    cin >> q;
+    cin >> n >> m >> q;
     
-    
-    best[0][0] = 0;
+    int w[n];    
 
     for( int i = 0; i < n ; ++ i ) {
         cin >> w[i];
     }
 
-    for( int i = 0; i < n ; ++ i ) {
-        best[i][]
+    const int maxState = (1 << (m -1) ) - 1 ;
+
+    int best[n][ maxState + 1 ];    
+    
+    for( int i = 0; i < n; ++ i ) {
+        for( int j = 0; j < maxState + 1; ++ j ){
+            best[i][j] = -1;
+        }
     } 
+
+
+    best[0][0] = 0;
+    best[0][1] = w[0];
+
+    //状态递推去求解
+    for( int i = 0; i < n - 1 ; ++ i ) {
+        for( int s = 0 ; s <= maxState ; ++s ) {
+            int c = caculateNumberOfOne( s , m);
+            if( best[i][s] != -1 ) {
+                int not_choose = (s << 1) & maxState;
+                int choose = not_choose | 1;
+            
+                best[i+1][ not_choose ] = max(best[i+1][not_choose],best[i][s]);
+                if( c < q ){
+                    //choose the (i+1)th seat
+                    best[i+1][ choose ] = max( best[i+1][choose],best[i][s] + w[i+1]);
+                }
+            }
+        }
+    } 
+        
+    int result = 0;
+
+    for( int s = 0 ; s <= maxState ; ++ s ){
+        if( best[n - 1 ][s] > result ) {
+            result = best[n-1][s];
+        }
+    }
+
+    cout << result <<endl;
 
     return 0; 
 }
