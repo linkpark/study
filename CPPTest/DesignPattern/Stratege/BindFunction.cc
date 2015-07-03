@@ -47,7 +47,7 @@ public:
     } 
 };
 
-int main(){
+int main() {
     GameLevel level;
     EvilBadGuy ebg( std::tr1::bind(&GameLevel::health, 
                 level, std::tr1::placeholders::_1) );

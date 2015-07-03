@@ -32,11 +32,9 @@ private:
 };
 
 int main(){
-    DeriveGameCharacter d_class;
-    GameCharacter b_class;
+    GameCharacter *b_class = new DeriveGameCharacter();
 
-    cout << b_class.healthValue() <<endl;
-    cout << d_class.healthValue() << endl;
+    cout << b_class->healthValue() <<endl;
 
     return 0;
 }
