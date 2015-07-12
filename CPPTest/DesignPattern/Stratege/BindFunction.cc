@@ -32,6 +32,7 @@ public:
         cout << param_f<<endl;
         cout << param_i <<endl;
         cout << a_ <<endl;
+        cout << this <<endl;
         return 4.2;
     }
 
@@ -47,7 +48,7 @@ public:
 };
 
 int main() {
-    GameLevel level(3);
+    GameLevel *level= new GameLevel(3);
     EvilBadGuy ebg( std::tr1::bind(&GameLevel::health, 
                 level, std::tr1::placeholders::_1,std::tr1::placeholders::_2,3) );
 
