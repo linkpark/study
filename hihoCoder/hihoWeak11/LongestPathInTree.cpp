@@ -10,12 +10,12 @@ int longest_path = 0;
 int dfs(int pre, int root ) {
     int first = 0;
     int second = 0;
-    
+
     //travse the adjacent
     for( size_t i = 0; i < edge[root].size(); ++i ) {
         if( edge[root][i] == pre )
            continue;
-        
+
         int tmp = dfs( root, edge[root][i] );
         if( tmp  > first ){
             second = first;
@@ -24,7 +24,7 @@ int dfs(int pre, int root ) {
             second = tmp;
         }
     }
-    
+
     longest_path = max( longest_path, first+second );
 
     return first+1;
@@ -44,7 +44,7 @@ int main() {
     }
 
     dfs(0,1);
-    
+
     cout << longest_path <<endl;
 
     return 0;
